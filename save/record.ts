@@ -5,6 +5,7 @@ import { RecordCreature } from "./record_creature";
 import { RecordDialog } from "./record_dialog";
 import { RecordFaction } from "./record_faction";
 import { RecordGeneric } from "./record_generic";
+import { RecordQuest } from "./record_quest";
 import { bufToInt, bufToByte, bufToShort, bufToArray } from "./util";
 
 export enum RecordType {
@@ -88,8 +89,7 @@ export default class Record {
                 this.subRecord = new RecordDialog(this, buf, offset);
                 break;
             case RecordType.Quest:
-                // @TODO
-                // this.subRecord = new RecordQuest(this, buf, offset);
+                this.subRecord = new RecordQuest(this, buf, offset);
                 break;
             case RecordType.AI:
                 this.subRecord = new RecordAI(this, buf, offset);
