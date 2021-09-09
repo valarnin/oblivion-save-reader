@@ -125,6 +125,7 @@ export class RecordCreature {
 
         if (record.flags & 0x20) {
             this.spellCount = bufToShort(buf.slice(offset, offset + 2));
+            offset += 2;
             for (let i = 0; i < this.spellCount; ++i) {
                 this.spellIds.push(bufToInt(buf.slice(offset, offset + 4)));
                 offset += 4;
