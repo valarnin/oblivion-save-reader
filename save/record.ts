@@ -2,6 +2,7 @@ import { RecordAI } from "./record_ai";
 import { RecordBook } from "./record_book";
 import { RecordCell } from "./record_cell";
 import { RecordCreature } from "./record_creature";
+import { RecordCreatureReference } from "./record_creaturereference";
 import { RecordDialog } from "./record_dialog";
 import { RecordFaction } from "./record_faction";
 import { RecordGeneric } from "./record_generic";
@@ -82,8 +83,7 @@ export default class Record {
                 break;
             case RecordType.CharacterReference:
             case RecordType.CreatureReference:
-                // @TODO
-                // this.subRecord = new RecordCreatureReference(this, buf, offset);
+                this.subRecord = new RecordCreatureReference(this, buf, offset);
                 break;
             case RecordType.Dialog:
                 this.subRecord = new RecordDialog(this, buf, offset);
