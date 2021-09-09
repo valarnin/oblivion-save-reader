@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "module": "ES2020",
+        "target": "ES2020",
+        "sourceMap": true,
+        "outDir": "dist",
+        "allowJs": true,
+        "strict": true,
+        "declaration": true,
+        "declarationMap": false,
+        "moduleResolution": "node",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+    },
+    "include": [
+        "**/*.ts",
+    ]
+}
