@@ -6,6 +6,7 @@ import { RecordCreatureReference } from "./record_creaturereference";
 import { RecordDialog } from "./record_dialog";
 import { RecordFaction } from "./record_faction";
 import { RecordGeneric } from "./record_generic";
+import { RecordInstanceReference } from "./record_instancereference";
 import { RecordQuest } from "./record_quest";
 import { bufToInt, bufToByte, bufToShort, bufToArray } from "./util";
 
@@ -78,8 +79,7 @@ export default class Record {
                 this.subRecord = new RecordCell(this, buf, offset);
                 break;
             case RecordType.InstanceReference:
-                // @TODO
-                // this.subRecord = new RecordInstanceReference(this, buf, offset);
+                this.subRecord = new RecordInstanceReference(this, buf, offset);
                 break;
             case RecordType.CharacterReference:
             case RecordType.CreatureReference:
