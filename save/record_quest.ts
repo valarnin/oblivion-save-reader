@@ -71,7 +71,8 @@ export class RecordQuest {
                 this.data.push(bufToArray(buf.slice(offset, offset + 12)));
                 offset += 12;
                 if (offset > (startOffset + record.dataSize)) {
-                    debugger;
+                    console.log('subrecord for quest record has invalid data', record);
+                    break;
                 }
             }
         }

@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             void file.arrayBuffer().then((b) => {
                 const saveFile = new window.oblivionSaveFile.SaveFile(b);
                 console.log(saveFile);
+                window.saveFile = saveFile;
             });
         }
     };
