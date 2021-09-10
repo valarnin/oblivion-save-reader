@@ -6,7 +6,24 @@
     <script src="./dist/bundle.js"></script>
     <script src="./test.js"></script>
   </head>
-  <body style="margin:0;padding:0;width:100vw;height:100vh">
-      <pre class="log"></pre>
+  <body style="margin:0;padding:0;min-width:100vw;min-height:100vh">
+    <table id='quest-table' border=1>
+      <thead>
+        <tr>
+          <td></td>
+          <td>ID</td>
+          <td>Form ID</td>
+          <td>Name</td>
+          <td>Stages</td>
+          <td>Fame</td>
+          <td>URL</td>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <td colspan=5 class="total-completed"></td>
+        <td colspan=2 class="total-fame"></td>
+      </tfoot>
+    </table>
   </body>
 </html>
