@@ -730,11 +730,11 @@ const gates = [
     {"name":"Random 75","formId":0x000615e8,"x":-64205.21875,"y":133134.109375,"z":28962.486328125,"fixed":false,"ignore":false},
     {"name":"Random 76","formId":0x0018b24a,"x":-177933.765625,"y":-18267.12890625,"z":5435.20068359375,"fixed":false,"ignore":false},
     {"name":"Random 77","formId":0x00064416,"x":-59881.5078125,"y":153499.375,"z":40116.82421875,"fixed":false,"ignore":false},
+    {"name":"Random 78","formId":0x0018b249,"x":-202214.671875,"y":1288.3956298828125,"z":7381.740234375,"fixed":false,"ignore":false},
+    {"name":"Random 79","formId":0x0018d328,"x":121965.1171875,"y":-174993.09375,"z":372.8039855957031,"fixed":false,"ignore":false},
     {"name":"Great Gate","formId":0x0002756e,"x":37607.65234375,"y":155650.375,"z":24803.705078125,"fixed":true,"ignore":false},
     {"name":"Anvil","formId":0x00026ebf,"x":-202755.453125,"y":-22498.0078125,"z":2038.662109375,"fixed":true,"ignore":false},
     {"name":"Bravil","formId":0x00026ebe,"x":71020.859375,"y":-26094.0703125,"z":1443.209716796875,"fixed":true,"ignore":false},
-    {"name":"Bravil","formId":0x0018b249,"x":-202214.671875,"y":1288.3956298828125,"z":7381.740234375,"fixed":true,"ignore":false},
-    {"name":"Bruma","formId":0x0018d328,"x":121965.1171875,"y":-174993.09375,"z":372.8039855957031,"fixed":true,"ignore":false},
     {"name":"Bruma","formId":0x00026eba,"x":30494.984375,"y":142150.875,"z":25440.158203125,"fixed":true,"ignore":false},
     {"name":"Cheydinhal","formId":0x00026f12,"x":107696,"y":96064,"z":7840,"fixed":true,"ignore":false},
     {"name":"Chorrol","formId":0x000270f7,"x":-62942.66015625,"y":84015.09375,"z":14557.5185546875,"fixed":true,"ignore":false},
@@ -751,7 +751,7 @@ const gates = [
     {"name":"Fixed 9","formId":0x0018ae1c,"x":79904.734375,"y":149113.65625,"z":34027.01171875,"fixed":true,"ignore":false},
     {"name":"Fixed 10","formId":0x0018a833,"x":125007.1484375,"y":-145395.1875,"z":3129.884033203125,"fixed":true,"ignore":false},
     {"name":"Fixed 11","formId":0x0018d324,"x":138824.3125,"y":-133084.34375,"z":3410.793212890625,"fixed":true,"ignore":false},
-    {"name":"Fixed 11","formId":0x0018b248,"x":-194576.59375,"y":26228.734375,"z":5925.1259765625,"fixed":true,"ignore":false},
+    {"name":"Fixed 12","formId":0x0018b248,"x":-194576.59375,"y":26228.734375,"z":5925.1259765625,"fixed":true,"ignore":false},
     {"name":"Kvatch","formId":0x0001e8a3,"x":-144798.609375,"y":-16498.912109375,"z":11381.1650390625,"fixed":true,"ignore":false},
     {"name":"Leyawiin","formId":0x00026f13,"x":104616.8125,"y":-137432.9375,"z":22.773895263671875,"fixed":true,"ignore":false},
     {"name":"Skingrad","formId":0x000270f8,"x":-50863.38671875,"y":2395.401611328125,"z":7920.20751953125,"fixed":true,"ignore":false}
@@ -1363,12 +1363,9 @@ const rebuildArtifactsTable = (saveFile = undefined) => {
         if (saveFile) {
             let record = saveFile.records.find((e) => e.formId === quest.formId);
             if (record) {
-                for (const stage of record.subRecord.stage) {
-                    if (quest.stages.includes(stage.index)) {
-                        status = '✔';
-                        ++completed;
-                        break;
-                    }
+                if (quest.stages.includes(100)) {
+                    status = '✔';
+                    ++completed;
                 }
             }
         }
