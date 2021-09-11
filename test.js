@@ -978,6 +978,36 @@ const books = [
     {"formId":0x000243cd,"name":"The Black Arrow, v 1","skill":"Acrobatics"},
 ];
 
+const houses = [
+    {"formId":0x0003636F,"city":'Anvil'},
+    {"formId":0x00085480,"city":'Bravil'},
+    {"formId":0x00085481,"city":'Bruma'},
+    {"formId":0x00085483,"city":'Cheydinhal'},
+    {"formId":0x00085482,"city":'Chorrol'},
+    {"formId":0x00085485,"city":'Imperial City'},
+    {"formId":0x0008547F,"city":'Leyawiin'},
+    {"formId":0x00085484,"city":'Skringrad'},
+];
+
+// This is just the quest IDs to map to that table
+const artifacts = [
+    {id:'DAAzura',name:'Azura'},
+    {id:'DABoethia',name:'Boethia'},
+    {id:'DAClavicusVile',name:'Clavicus Vile'},
+    {id:'DAHermaeusMora',name:'Hermaeus Mora'},
+    {id:'DAHircine',name:'Hircine'},
+    {id:'DAMalacath',name:'Malacath'},
+    {id:'DAMephala',name:'Mephala'},
+    {id:'DAMeridia',name:'Meridia'},
+    {id:'DAMolagBal',name:'Molag Bal'},
+    {id:'DANamira',name:'Namira'},
+    {id:'DANocturnal',name:'Nocturnal'},
+    {id:'DAPeryite',name:'Peryite'},
+    {id:'DASanguine',name:'Sanguine'},
+    {id:'DASheogorath',name:'Sheogorath'},
+    {id:'DAVaermina',name:'Vaermina'},
+];
+
 const rebuildQuestsTable = (saveFile = undefined) => {
     let qTable = document.getElementById('quest-table');
     let qBody = qTable.querySelector('tbody');
@@ -1280,6 +1310,80 @@ const rebuildInfo = (saveFile) => {
     ctx.putImageData(data, 0, 0);
 };
 
+const rebuildHousesTable = (saveFile = undefined) => {
+    let qTable = document.getElementById('houses-table');
+    let qBody = qTable.querySelector('tbody');
+    let qFoot = qTable.querySelector('tfoot');
+
+    [...qBody.querySelectorAll('tr')].forEach((e) => {
+        e.remove();
+    });
+
+    let completed = 0;
+
+    for (const house of houses) {
+        let status = '✖';
+        if (saveFile) {
+            let record = saveFile.records.find((e) => e.formId === house.formId);
+            if (record) {
+                if (record.subRecord?.stageNum > 0) {
+                    status = '✔';
+                    ++completed;
+                }
+            }
+        }
+
+        let qTr = document.createElement('tr');
+        qTr.innerHTML = `
+<td class='status ${status}'>${status}</td>
+<td class='formId'>${house.formId?('0000000'+house.formId.toString(16)).substr(-8):'???'}</td>
+<td class='city'>${house.city}</td>
+`;
+        qBody.append(qTr);
+    }
+
+    qFoot.querySelector('.total-completed').innerText = completed;
+};
+
+const rebuildArtifactsTable = (saveFile = undefined) => {
+    let qTable = document.getElementById('artifacts-table');
+    let qBody = qTable.querySelector('tbody');
+    let qFoot = qTable.querySelector('tfoot');
+
+    [...qBody.querySelectorAll('tr')].forEach((e) => {
+        e.remove();
+    });
+
+    let completed = 0;
+    let fame = 0;
+
+    for (const artifact of artifacts) {
+        let quest = quests.find(q=>q.id === artifact.id);
+        let status = '✖';
+        if (saveFile) {
+            let record = saveFile.records.find((e) => e.formId === quest.formId);
+            if (record) {
+                for (const stage of record.subRecord.stage) {
+                    if (quest.stages.includes(stage.index)) {
+                        status = '✔';
+                        ++completed;
+                        break;
+                    }
+                }
+            }
+        }
+
+        let qTr = document.createElement('tr');
+        qTr.innerHTML = `
+<td class='status ${status}'>${status}</td>
+<td class='formId'>${('0000000'+quest.formId.toString(16)).substr(-8)}</td>
+<td class='name'>${artifact.name}</td>
+`;
+        qBody.append(qTr);
+    }
+
+    qFoot.querySelector('.total-completed').innerText = completed;
+};
 
 const rebuildStatistics = (saveFile) => {
     const record = saveFile.records.find(r=>r.formId===0x14);
@@ -1308,6 +1412,8 @@ document.addEventListener('DOMContentLoaded', () => {
     rebuildHorsesTable();
     rebuildInvestmentsTable();
     rebuildBooksTable();
+    rebuildHousesTable();
+    rebuildArtifactsTable();
     const ignoreEvent = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -1337,6 +1443,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 rebuildHorsesTable(saveFile);
                 rebuildInvestmentsTable(saveFile);
                 rebuildBooksTable(saveFile);
+                rebuildHousesTable(saveFile);
+                rebuildArtifactsTable(saveFile);
 
                 rebuildInfo(saveFile);
                 rebuildStatistics(saveFile);
