@@ -769,6 +769,215 @@ const horses = [
     {"formId":0x0004de96,"name":"chorrol"},
 ];
 
+const investments = [
+    {"formId":0x0003630B,"city":"Anvil","store":"Morvayn's Peacemakers","name":"Enilroth"},
+    {"formId":0x0002D06C,"city":"Anvil","store":"Anvil Mages Guild","name":"Felen Relas"},
+    {"formId":0x0000BC7A,"city":"Anvil","store":"The Flowing Bowl","name":"Maenlorn"},
+    {"formId":0x00035725,"city":"Anvil","store":"Lelles' Quality Merchandise","name":"Norbert Lelles"},
+    {"formId":0x0003D7FD,"city":"Anvil","store":"Anvil Castle","name":"Orrin"},
+    {"formId":0x0000BC6E,"city":"Anvil","store":"Morvayn's Peacemakers","name":"Varel Morvayn"},
+    {"formId":0x0000BC76,"city":"Anvil","store":"The Count's Arms","name":"Wilbur"},
+    {"formId":0x0002F080,"city":"Bravil","store":"Bravil Mages Guild","name":"Ardaline"},
+    {"formId":0x0000A117,"city":"Bravil","store":"The Lonely Suitor Lodge","name":"Bogrum Gro-Galash"},
+    {"formId":0x0000A11C,"city":"Bravil","store":"The Archer's Paradox","name":"Daenlin"},
+    {"formId":0x0000A129,"city":"Bravil","store":"Silverhome on the Water","name":"Gilgondorin"},
+    {"formId":0x0000A130,"city":"Bravil","store":"Luciana Galena's House","name":"Luciana Galena"},
+    {"formId":0x0000A123,"city":"Bravil","store":"The Fair Deal","name":"Nilawen"},
+    {"formId":0x0003E180,"city":"Bravil","store":"Alley next to The Fair Deal","name":"Nordinor"},
+    {"formId":0x0000A118,"city":"Bravil","store":"Bravil Fighters Guild","name":"Tadrose Helas"},
+    {"formId":0x00036262,"city":"Bruma","store":"Hammer and Axe","name":"Fjotreid"},
+    {"formId":0x0003626B,"city":"Bruma","store":"Jerall View Inn","name":"Hafid Hollowleg"},
+    {"formId":0x0003E18F,"city":"Bruma","store":"Novaroma","name":"Karinnarre"},
+    {"formId":0x0003626E,"city":"Bruma","store":"Olav's Tap and Tack","name":"Olav"},
+    {"formId":0x00036266,"city":"Bruma","store":"Nord Winds","name":"Olfand"},
+    {"formId":0x00036285,"city":"Bruma","store":"Ongar's House","name":"Ongar the World-Weary"},
+    {"formId":0x00003461,"city":"Bruma","store":"Bruma Mages Guild","name":"Selena Orania"},
+    {"formId":0x00036265,"city":"Bruma","store":"Nord Winds","name":"Skjorta"},
+    {"formId":0x00036267,"city":"Bruma","store":"Novaroma","name":"Suurootan"},
+    {"formId":0x00003644,"city":"Cheydinhal","store":"Borba's Goods and Stores","name":"Borba gra-Uzgash"},
+    {"formId":0x00003639,"city":"Cheydinhal","store":"Newlands Lodge","name":"Dervera Romalen"},
+    {"formId":0x0000364A,"city":"Cheydinhal","store":"Cheydinhal Mages Guild","name":"Eilonwy"},
+    {"formId":0x00003641,"city":"Cheydinhal","store":"Mach-Na's Books","name":"Mach-Na"},
+    {"formId":0x0003E191,"city":"Cheydinhal","store":"Borba's Goods and Stores","name":"Magra gro-Naybek"},
+    {"formId":0x00003654,"city":"Cheydinhal","store":"Cheydinhal Bridge Inn","name":"Mariana Ancharia"},
+    {"formId":0x0000363B,"city":"Cheydinhal","store":"The March Rider","name":"Tertia Viducia"},
+    {"formId":0x00023508,"city":"Chorrol","store":"Chorrol Mages Guild","name":"Angalmo"},
+    {"formId":0x00023504,"city":"Chorrol","store":"The Grey Mare","name":"Emfrid"},
+    {"formId":0x000234DB,"city":"Chorrol","store":"Renoit's Books","name":"Estelle Renoit"},
+    {"formId":0x000234FC,"city":"Chorrol","store":"Fire and Steel","name":"Rasheda"},
+    {"formId":0x0002350D,"city":"Chorrol","store":"Chorrol Fighters Guild","name":"Sabine Laul"},
+    {"formId":0x000234FD,"city":"Chorrol","store":"Northern Goods and Trade","name":"Seed-Neeus"},
+    {"formId":0x00023502,"city":"Chorrol","store":"The Oak and Crosier","name":"Talasma"},
+    {"formId":0x0001D212,"city":"Imperial City, Market District","store":"The Gilded Carafe","name":"Claudette Perrick"},
+    {"formId":0x0001D20D,"city":"Imperial City, Market District","store":"The Feed Bag","name":"Delos Fandas"},
+    {"formId":0x0001D20F,"city":"Imperial City, Market District","store":"Red Diamond Jewelry","name":"Hamlof Red-Tooth"},
+    {"formId":0x0001D20B,"city":"Imperial City, Market District","store":"Jensine's \"Good as New\" Merchandise","name":"Jensine"},
+    {"formId":0x0001D211,"city":"Imperial City, Market District","store":"The Best Defense","name":"Maro Rufus"},
+    {"formId":0x0001D159,"city":"Imperial City, Market District","store":"The Main Ingredient","name":"Ogier Georick"},
+    {"formId":0x0001D207,"city":"Imperial City, Market District","store":"Divine Elegance","name":"Palonirya"},
+    {"formId":0x0001D158,"city":"Imperial City, Market District","store":"First Edition","name":"Phintias"},
+    {"formId":0x0001D15E,"city":"Imperial City, Market District","store":"Rindir's Staffs","name":"Rindir"},
+    {"formId":0x0001D15A,"city":"Imperial City, Market District","store":"A Fighting Chance","name":"Rohssan"},
+    {"formId":0x0001D209,"city":"Imperial City, Market District","store":"Three Brothers Trade Goods","name":"Sergius Verus"},
+    {"formId":0x0001D20A,"city":"Imperial City, Market District","store":"Three Brothers Trade Goods","name":"Tertullian Verus"},
+    {"formId":0x0001D15D,"city":"Imperial City, Market District","store":"The Copious Coinpurse","name":"Thoronir"},
+    {"formId":0x0001D213,"city":"Imperial City, Market District","store":"Slash 'N Smash","name":"Urbul gro-Orkulg"},
+    {"formId":0x0001D210,"city":"Imperial City, Market District","store":"The Best Defense","name":"Varnado"},
+    {"formId":0x0001D15B,"city":"Imperial City, Market District","store":"The Merchants Inn","name":"Velus Hosidius"},
+    {"formId":0x0001D15C,"city":"Imperial City, Market District","store":"Stonewall Shields","name":"Viator Accius"},
+    {"formId":0x0002F878,"city":"Imperial City, Talos Plaza District","store":"The Tiber Septim Hotel","name":"Augusta Calidia"},
+    {"formId":0x0000391B,"city":"Imperial City, Elven Gardens District","store":"Fathis Ules' House","name":"Fathis Ules"},
+    {"formId":0x00024AC2,"city":"Imperial City, Arcane University","store":"Lustratorium","name":"Julienne Fanis"},
+    {"formId":0x0001C4B2,"city":"Imperial City, Elven Gardens District","store":"The King and Queen Tavern","name":"Ley Marillin"},
+    {"formId":0x0001C4B7,"city":"Imperial City, Elven Gardens District","store":"Luther Broad's Boarding House","name":"Luther Broad"},
+    {"formId":0x00014730,"city":"Imperial City, Waterfront District","store":"The Bloated Float Inn","name":"Ormil"},
+    {"formId":0x000C45B8,"city":"Imperial City, Outside","store":"Near Stables","name":"Shady Sam"},
+    {"formId":0x0001D5B4,"city":"Imperial City, Temple District","store":"The All-Saints Inn","name":"Willet"},
+    {"formId":0x0002ECB4,"city":"Kvatch","store":"Outside her tent","name":"Batul gra-Sharob"},
+    {"formId":0x0002ECB7,"city":"Kvatch","store":"Refugee Camp","name":"Sigrid"},
+    {"formId":0x000314E5,"city":"Leyawiin","store":"Leyawiin Mages Guild","name":"Alves Uvenim"},
+    {"formId":0x0003E214,"city":"Leyawiin","store":"Southern Books","name":"Bugak gro-Bol"},
+    {"formId":0x0003599B,"city":"Leyawiin","store":"Dar Jee's House","name":"Dar Jee"},
+    {"formId":0x0003E185,"city":"Leyawiin","store":"Best Goods and Guarantees","name":"Elsynia"},
+    {"formId":0x00035292,"city":"Leyawiin","store":"Best Goods and Guarantees","name":"Gundalas"},
+    {"formId":0x000314E4,"city":"Leyawiin","store":"Leyawiin Mages Guild","name":"S'drassa"},
+    {"formId":0x0003528D,"city":"Leyawiin","store":"Three Sisters' Inn","name":"Shuravi"},
+    {"formId":0x00035294,"city":"Leyawiin","store":"The Dividing Line","name":"Tun-Zeeus"},
+    {"formId":0x0002C8D9,"city":"Leyawiin","store":"Five Claws Lodge","name":"Witseidutsei"},
+    {"formId":0x000389B9,"city":"N/A","store":"Faregyl Inn","name":"Abhuki"},
+    {"formId":0x00031025,"city":"N/A","store":"The Drunken Dragon Inn","name":"Andreas Draconis"},
+    {"formId":0x000243C9,"city":"Pell's Gate","store":"The Sleeping Mare","name":"Candice Corgine"},
+    {"formId":0x0002DC05,"city":"N/A","store":"Brina Cross Inn","name":"Christophe Marane"},
+    {"formId":0x0003AB4F,"city":"N/A","store":"Imperial Bridge Inn","name":"Davela Hlaren"},
+    {"formId":0x00097009,"city":"N/A","store":"Shrine of Sanguine","name":"Engorm"},
+    {"formId":0x000280E6,"city":"Hackdirt","store":"Moslin's Dry Goods","name":"Etira Moslin"},
+    {"formId":0x0003AB52,"city":"N/A","store":"Gottshaw Inn","name":"Foroch"},
+    {"formId":0x0009823E,"city":"Bleaker's Way","store":"Goodwill Inn","name":"Kirsten"},
+    {"formId":0x00030021,"city":"N/A","store":"Roxey Inn","name":"Malene"},
+    {"formId":0x00024FE1,"city":"N/A","store":"Inn of Ill Omen","name":"Manheim Maulhand"},
+    {"formId":0x000BB9CC,"city":"Weye","store":"Wawnet Inn","name":"Nerussa"},
+    {"formId":0x000897E8,"city":"Border Watch","store":"Border Watch Inn","name":"S'thasa"},
+    {"formId":0x000280FC,"city":"Hackdirt","store":"Moslin's Inn","name":"Vlanhonder Moslin"},
+    {"formId":0x00028F9A,"city":"Skingrad","store":"Hammer and Tongs","name":"Agnete the Pickled"},
+    {"formId":0x00028F8F,"city":"Skingrad","store":"West Weald Inn","name":"Erina Jeranus"},
+    {"formId":0x00028E74,"city":"Skingrad","store":"All Things Alchemical","name":"Falanu Hlaalu"},
+    {"formId":0x00028F99,"city":"Skingrad","store":"Colovian Traders","name":"Gunder"},
+    {"formId":0x00028F8B,"city":"Skingrad","store":"Two Sisters Lodge","name":"Mog gra-Mogakh"},
+    {"formId":0x0003E92C,"city":"Skingrad","store":"West Weald Inn","name":"Sinderion"},
+];
+
+const books = [
+    {"formId":0x000243cb,"name":"A Dance in Fire, v1","skill":"Acrobatics"},
+    {"formId":0x000243cc,"name":"A Dance in Fire, v4","skill":"Acrobatics"},
+    {"formId":0x000243ce,"name":"Mystery of Talara, v 1","skill":"Acrobatics"},
+    {"formId":0x000243ca,"name":"Thief","skill":"Acrobatics"},
+    {"formId":0x00073a5f,"name":"Calcinator Treatise","skill":"Alchemy"},
+    {"formId":0x000243d2,"name":"De Rerum Dirennis","skill":"Alchemy"},
+    {"formId":0x000243cf,"name":"A Game at Dinner","skill":"Alchemy"},
+    {"formId":0x000243d0,"name":"Mannimarco, King of Worms","skill":"Alchemy"},
+    {"formId":0x000243d1,"name":"Song of the Alchemists","skill":"Alchemy"},
+    {"formId":0x000243d4,"name":"Daughter of the Niben","skill":"Alteration"},
+    {"formId":0x000243d5,"name":"The Dragon Break","skill":"Alteration"},
+    {"formId":0x000243d8,"name":"The Lunar Lorkhan","skill":"Alteration"},
+    {"formId":0x00073a69,"name":"Reality & Other Falsehoods","skill":"Alteration"},
+    {"formId":0x000243d6,"name":"Sithis","skill":"Alteration"},
+    {"formId":0x000243d9,"name":"The Armorer's Challenge","skill":"Armorer"},
+    {"formId":0x000243dc,"name":"Cherim's Heart of Anequina","skill":"Armorer"},
+    {"formId":0x00073a68,"name":"Heavy Armor Repair","skill":"Armorer"},
+    {"formId":0x000243da,"name":"Last Scabbard of Akrash","skill":"Armorer"},
+    {"formId":0x00073a67,"name":"Light Armor Repair","skill":"Armorer"},
+    {"formId":0x000243e2,"name":"The Argonian Account, Book 1","skill":"Athletics"},
+    {"formId":0x000243e1,"name":"Beggar","skill":"Athletics"},
+    {"formId":0x000243df,"name":"A Dance in Fire, v3","skill":"Athletics"},
+    {"formId":0x000243de,"name":"The Ransom of Zarek","skill":"Athletics"},
+    {"formId":0x000243e0,"name":"The Red Kitchen Reader","skill":"Athletics"},
+    {"formId":0x000243e4,"name":"2920, Morning Star (v1)","skill":"Blade"},
+    {"formId":0x00073a61,"name":"Battle of Sancre Tor","skill":"Blade"},
+    {"formId":0x000243e5,"name":"Fire and Darkness","skill":"Blade"},
+    {"formId":0x000243e6,"name":"Song Of Hrormir","skill":"Blade"},
+    {"formId":0x000243e3,"name":"Words and Philosophy","skill":"Blade"},
+    {"formId":0x000243ea,"name":"A Dance in Fire, v2","skill":"Block"},
+    {"formId":0x000243e8,"name":"Death Blow of Abernanit","skill":"Block"},
+    {"formId":0x000243e9,"name":"The Mirror","skill":"Block"},
+    {"formId":0x000243ec,"name":"The Warp in the West","skill":"Block"},
+    {"formId":0x000243eb,"name":"Warrior","skill":"Block"},
+    {"formId":0x000243ee,"name":"The Importance of Where","skill":"Blunt"},
+    {"formId":0x000243f0,"name":"King","skill":"Blunt"},
+    {"formId":0x00073a62,"name":"The Legendary Sancre Tor","skill":"Blunt"},
+    {"formId":0x00073a66,"name":"Mace Etiquette","skill":"Blunt"},
+    {"formId":0x000243ef,"name":"Night Falls on Sentinel","skill":"Blunt"},
+    {"formId":0x000243f5,"name":"2920, Frostfall (v10)","skill":"Conjuration"},
+    {"formId":0x000243f4,"name":"2920, Hearth Fire (v9)","skill":"Conjuration"},
+    {"formId":0x000243f2,"name":"The Doors of Oblivion","skill":"Conjuration"},
+    {"formId":0x00073a60,"name":"Liminal Bridges","skill":"Conjuration"},
+    {"formId":0x00022b04,"name":"Mythic Dawn Commentaries 1","skill":"Conjuration"},
+    {"formId":0x000243f6,"name":"The Warrior's Charge","skill":"Conjuration"},
+    {"formId":0x000243fa,"name":"The Art of War Magic","skill":"Destruction"},
+    {"formId":0x000243f7,"name":"The Horrors of Castle Xyr","skill":"Destruction"},
+    {"formId":0x000243f9,"name":"A Hypothetical Treachery","skill":"Destruction"},
+    {"formId":0x000243fb,"name":"Mystery of Talara, v 3","skill":"Destruction"},
+    {"formId":0x00022b05,"name":"Mythic Dawn Commentaries 2","skill":"Destruction"},
+    {"formId":0x000243f8,"name":"Response to Bero's Speech","skill":"Destruction"},
+    {"formId":0x000243fe,"name":"Ahzirr Traajijazeri","skill":"Hand to Hand"},
+    {"formId":0x000243fc,"name":"Immortal Blood","skill":"Hand to Hand"},
+    {"formId":0x00024400,"name":"Master Zoaraym's Tale","skill":"Hand to Hand"},
+    {"formId":0x00073a6a,"name":"Way of the Exposed Palm","skill":"Hand to Hand"},
+    {"formId":0x000243fd,"name":"The Wolf Queen, v 2","skill":"Hand to Hand"},
+    {"formId":0x00024402,"name":"2920, MidYear (v6)","skill":"Heavy Armor"},
+    {"formId":0x00024403,"name":"Chimarvamidium","skill":"Heavy Armor"},
+    {"formId":0x000a915c,"name":"Fighters Guild History, 1st Ed.","skill":"Heavy Armor"},
+    {"formId":0x00024401,"name":"Hallgerd's Tale","skill":"Heavy Armor"},
+    {"formId":0x00024405,"name":"History of the Fighters Guild","skill":"Heavy Armor"},
+    {"formId":0x00024404,"name":"How Orsinium Passed to Orcs","skill":"Heavy Armor"},
+    {"formId":0x00024407,"name":"The Argonian Account, Book 3","skill":"Illusion"},
+    {"formId":0x00024408,"name":"Incident in Necrom","skill":"Illusion"},
+    {"formId":0x0002440a,"name":"Mystery of Talara, v 4","skill":"Illusion"},
+    {"formId":0x00022b06,"name":"Mythic Dawn Commentaries 3","skill":"Illusion"},
+    {"formId":0x00024409,"name":"Palla, volume 1","skill":"Illusion"},
+    {"formId":0x00024406,"name":"The Wolf Queen, v 3","skill":"Illusion"},
+    {"formId":0x0002440C,"name":"Ice and Chitin","skill":"Light Armor"},
+    {"formId":0x0002440d,"name":"Lord Jornibret's Last Dance","skill":"Light Armor"},
+    {"formId":0x0002440b,"name":"The Rear Guard","skill":"Light Armor"},
+    {"formId":0x0002440e,"name":"The Refugees","skill":"Light Armor"},
+    {"formId":0x0002440f,"name":"Rislav The Righteous","skill":"Light Armor"},
+    {"formId":0x00024531,"name":"The Black Arrow, v 2","skill":"Marksman"},
+    {"formId":0x00024411,"name":"A Dance in Fire, v5","skill":"Marksman"},
+    {"formId":0x00024530,"name":"Father Of The Niben","skill":"Marksman"},
+    {"formId":0x00024410,"name":"The Gold Ribbon of Merit","skill":"Marksman"},
+    {"formId":0x0002452f,"name":"Vernaccus and Bourlor","skill":"Marksman"},
+    {"formId":0x00024534,"name":"2920, Sun's Height (v7)","skill":"Mercantile"},
+    {"formId":0x00024532,"name":"The Buying Game","skill":"Mercantile"},
+    {"formId":0x00024535,"name":"A Dance in Fire, v6","skill":"Mercantile"},
+    {"formId":0x00024536,"name":"A Dance in Fire, v 7","skill":"Mercantile"},
+    {"formId":0x00024533,"name":"The Wolf Queen, v 4","skill":"Mercantile"},
+    {"formId":0x00024538,"name":"2920, Sun's Dawn (v2)","skill":"Mysticism"},
+    {"formId":0x00073a63,"name":"Before the Ages of Man","skill":"Mysticism"},
+    {"formId":0x00024539,"name":"The Black Arts On Trial","skill":"Mysticism"},
+    {"formId":0x00024537,"name":"The Firsthold Revolt","skill":"Mysticism"},
+    {"formId":0x00022b07,"name":"Mythic Dawn Commentaries 4","skill":"Mysticism"},
+    {"formId":0x00073a6b,"name":"Souls, Black and White","skill":"Mysticism"},
+    {"formId":0x0002453f,"name":"2920, Rain's Hand (v4)","skill":"Restoration"},
+    {"formId":0x0002453e,"name":"The Exodus","skill":"Restoration"},
+    {"formId":0x00024540,"name":"Mystery of Talara, v 2","skill":"Restoration"},
+    {"formId":0x0002453d,"name":"Notes on Racial Phylogeny","skill":"Restoration"},
+    {"formId":0x0002453c,"name":"Withershins","skill":"Restoration"},
+    {"formId":0x00073a65,"name":"Advances in Lock Picking","skill":"Security"},
+    {"formId":0x00024541,"name":"The Locked Room","skill":"Security"},
+    {"formId":0x00073a64,"name":"Proper Lock Design","skill":"Security"},
+    {"formId":0x00024545,"name":"Surfeit of Thieves","skill":"Security"},
+    {"formId":0x00024542,"name":"The Wolf Queen, v 1","skill":"Security"},
+    {"formId":0x00024547,"name":"2920, Last Seed (v8)","skill":"Sneak"},
+    {"formId":0x00024549,"name":"Legend of Krately House","skill":"Sneak"},
+    {"formId":0x0002454a,"name":"Purloined Shadows","skill":"Sneak"},
+    {"formId":0x00024548,"name":"Sacred Witness","skill":"Sneak"},
+    {"formId":0x00024546,"name":"The Wolf Queen, v 6","skill":"Sneak"},
+    {"formId":0x0002454d,"name":"2920, Second Seed (v5)","skill":"Speechcraft"},
+    {"formId":0x0002454b,"name":"Biography of the Wolf Queen","skill":"Speechcraft"},
+    {"formId":0x0002454c,"name":"The Wolf Queen, v 5","skill":"Speechcraft"},
+    {"formId":0x0002454e,"name":"The Wolf Queen, v 7","skill":"Speechcraft"},
+    {"formId":0x000243cd,"name":"The Black Arrow, v 1","skill":"Acrobatics"},
+];
+
 const rebuildQuestsTable = (saveFile = undefined) => {
     let qTable = document.getElementById('quest-table');
     let qBody = qTable.querySelector('tbody');
@@ -968,6 +1177,79 @@ const rebuildHorsesTable = (saveFile = undefined) => {
     qFoot.querySelector('.total-completed').innerText = completed;
 };
 
+const rebuildInvestmentsTable = (saveFile = undefined) => {
+    let qTable = document.getElementById('investments-table');
+    let qBody = qTable.querySelector('tbody');
+    let qFoot = qTable.querySelector('tfoot');
+
+    [...qBody.querySelectorAll('tr')].forEach((e) => {
+        e.remove();
+    });
+
+    let completed = 0;
+
+    for (const invest of investments) {
+        let status = '✖';
+        if (saveFile) {
+            let record = saveFile.records.find((e) => e.formId === invest.formId);
+            if (record) {
+                if (record.subRecord?.properties.find(p=>p.flag===82)?.value === 500) {
+                    status = '✔';
+                    ++completed;
+                }
+            }
+        }
+
+        let qTr = document.createElement('tr');
+        qTr.innerHTML = `
+<td class='status ${status}'>${status}</td>
+<td class='formId'>${invest.formId?('0000000'+invest.formId.toString(16)).substr(-8):'???'}</td>
+<td class='city'>${invest.city}</td>
+<td class='store'>${invest.store}</td>
+<td class='name'>${invest.name}</td>
+`;
+        qBody.append(qTr);
+    }
+
+    qFoot.querySelector('.total-completed').innerText = completed;
+};
+
+const rebuildBooksTable = (saveFile = undefined) => {
+    let qTable = document.getElementById('books-table');
+    let qBody = qTable.querySelector('tbody');
+    let qFoot = qTable.querySelector('tfoot');
+
+    [...qBody.querySelectorAll('tr')].forEach((e) => {
+        e.remove();
+    });
+
+    let completed = 0;
+
+    for (const book of books) {
+        let status = '✖';
+        if (saveFile) {
+            let record = saveFile.records.find((e) => e.formId === book.formId);
+            if (record) {
+                if (record.subRecord?.teaches === 255) {
+                    status = '✔';
+                    ++completed;
+                }
+            }
+        }
+
+        let qTr = document.createElement('tr');
+        qTr.innerHTML = `
+<td class='status ${status}'>${status}</td>
+<td class='formId'>${book.formId?('0000000'+book.formId.toString(16)).substr(-8):'???'}</td>
+<td class='skill'>${book.skill}</td>
+<td class='name'>${book.name}</td>
+`;
+        qBody.append(qTr);
+    }
+
+    qFoot.querySelector('.total-completed').innerText = completed;
+};
+
 const rebuildInfo = (saveFile) => {
     const infoDiv = document.querySelector('body > .info');
     for (const elem of [...infoDiv.querySelectorAll('.read')]) {
@@ -1003,6 +1285,8 @@ document.addEventListener('DOMContentLoaded', () => {
     rebuildSkillsTable();
     rebuildGatesTable();
     rebuildHorsesTable();
+    rebuildInvestmentsTable();
+    rebuildBooksTable();
     const ignoreEvent = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -1030,6 +1314,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 rebuildSkillsTable(saveFile);
                 rebuildGatesTable(saveFile);
                 rebuildHorsesTable(saveFile);
+                rebuildInvestmentsTable(saveFile);
+                rebuildBooksTable(saveFile);
 
                 rebuildInfo(saveFile);
             });

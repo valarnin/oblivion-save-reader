@@ -302,10 +302,12 @@ let getProps = (offset: number, buf: ArrayBuffer, endOffset: number): [number, {
             case 0x59:
                 value = {};
                 let convTopicLen = bufToByte(buf.slice(offset, offset + 1));
-                value.convTopic = bufTobzString(buf.slice(offset, offset + convTopicLen + 1));
+                value.convTopic = bufTobString(buf.slice(offset, offset + convTopicLen + 1));
                 offset += convTopicLen + 1;
-                value.convNum = bufToShort(buf.slice(offset, offset + 2));
-                offset += 2;
+                value.unknown = bufToByte(buf.slice(offset, offset + 1));
+                offset += 1;
+                value.convNum = bufToByte(buf.slice(offset, offset + 1));
+                offset += 1;
                 value.conv = [];
                 for (let l = 0; l < value.convNum; ++l) {
                     let conv: any = {};

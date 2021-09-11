@@ -5,6 +5,8 @@ import { bufToArray, bufTobString, bufToByte, bufTobzString, bufToDouble, bufToF
 export class RecordInstanceReference {
     cellChanged_cell?: number;
     cellChanged_x?: number;
+    cellChanged_y?: number;
+    cellChanged_z?: number;
 
     created_flags?: number;
     created_baseItem?: number;
@@ -70,9 +72,9 @@ export class RecordInstanceReference {
                 offset += 4;
                 this.cellChanged_x = bufToFloat(buf.slice(offset, offset + 4));
                 offset += 4;
-                this.cellChanged_x = bufToFloat(buf.slice(offset, offset + 4));
+                this.cellChanged_y = bufToFloat(buf.slice(offset, offset + 4));
                 offset += 4;
-                this.cellChanged_x = bufToFloat(buf.slice(offset, offset + 4));
+                this.cellChanged_z = bufToFloat(buf.slice(offset, offset + 4));
                 offset += 4;
             }
             if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
