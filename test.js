@@ -758,6 +758,17 @@ const gates = [
     // @TODO: Missing one random gate still
 ];
 
+const horses = [
+    {"formId":0x00032bf5,"name":"shadowmere"},
+    {"formId":0x00054226,"name":"bruma"},
+    {"formId":0x0004e28e,"name":"anvil"},
+    {"formId":0x0004e28f,"name":"bravil"},
+    {"formId":0x00053232,"name":"leyawiin"},
+    {"formId":0x0004bf2f,"name":"cheydinhal"},
+    {"formId":0x000545d6,"name":"skingraad"},
+    {"formId":0x0004de96,"name":"chorrol"},
+];
+
 const rebuildQuestsTable = (saveFile = undefined) => {
     let qTable = document.getElementById('quest-table');
     let qBody = qTable.querySelector('tbody');
@@ -922,6 +933,41 @@ const rebuildGatesTable = (saveFile = undefined) => {
     qFoot.querySelector('.total-completed').innerText = completed;
 };
 
+const rebuildHorsesTable = (saveFile = undefined) => {
+    let qTable = document.getElementById('horses-table');
+    let qBody = qTable.querySelector('tbody');
+    let qFoot = qTable.querySelector('tfoot');
+
+    [...qBody.querySelectorAll('tr')].forEach((e) => {
+        e.remove();
+    });
+
+    let completed = 0;
+
+    for (const horse of horses) {
+        let status = '✖';
+        if (saveFile) {
+            let record = saveFile.records.find((e) => e.formId === horse.formId);
+            if (record) {
+                if (record.flags & 0x40000000) {
+                    status = '✔';
+                    ++completed;
+                }
+            }
+        }
+
+        let qTr = document.createElement('tr');
+        qTr.innerHTML = `
+<td class='status ${status}'>${status}</td>
+<td class='formId'>${horse.formId?('0000000'+horse.formId.toString(16)).substr(-8):'???'}</td>
+<td class='name'>${horse.name}</td>
+`;
+        qBody.append(qTr);
+    }
+
+    qFoot.querySelector('.total-completed').innerText = completed;
+};
+
 const rebuildInfo = (saveFile) => {
     const infoDiv = document.querySelector('body > .info');
     for (const elem of [...infoDiv.querySelectorAll('.read')]) {
@@ -956,6 +1002,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rebuildLocsTable();
     rebuildSkillsTable();
     rebuildGatesTable();
+    rebuildHorsesTable();
     const ignoreEvent = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -982,6 +1029,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 rebuildLocsTable(saveFile);
                 rebuildSkillsTable(saveFile);
                 rebuildGatesTable(saveFile);
+                rebuildHorsesTable(saveFile);
+
                 rebuildInfo(saveFile);
             });
         }
