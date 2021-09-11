@@ -628,6 +628,136 @@ const ignoreLocs = [
     {"name":"Anvil Lighthouse","approxX":-196733,"approxY":-37483,"x":-196733.453125,"y":-37483.18359375,"z":875.7548828125,"formId":344109},
 ];
 
+const skills = [
+    {"name":"Armorer","key":"armorer"},
+    {"name":"Athletics","key":"athletics"},
+    {"name":"Blade","key":"blade"},
+    {"name":"Block","key":"block"},
+    {"name":"Blunt","key":"blunt"},
+    {"name":"Hand to Hand","key":"handToHand"},
+    {"name":"Heavy Armor","key":"heavyArmor"},
+    {"name":"Alchemy","key":"alchemy"},
+    {"name":"Alteration","key":"alteration"},
+    {"name":"Conjuration","key":"conjuration"},
+    {"name":"Destruction","key":"destruction"},
+    {"name":"Illusion","key":"illusion"},
+    {"name":"Mysticism","key":"mysticism"},
+    {"name":"Restoration","key":"restoration"},
+    {"name":"Acrobatics","key":"acrobatics"},
+    {"name":"Light Armor","key":"lightArmor"},
+    {"name":"Marksman","key":"marksman"},
+    {"name":"Mercantile","key":"mercantile"},
+    {"name":"Security","key":"security"},
+    {"name":"Sneak","key":"sneak"},
+    {"name":"Speechcraft","key":"speechcraft"},
+];
+
+const gates = [
+    {"name":"","formId":1607490,"x":-55385.6953125,"y":63701.48046875,"z":10662.654296875,"fixed":false,"ignore":false},
+    {"name":"","formId":398330,"x":-142911.71875,"y":-37260.73046875,"z":5375.56298828125,"fixed":false,"ignore":false},
+    {"name":"","formId":1607716,"x":-100435.1171875,"y":14644.9404296875,"z":6687.84228515625,"fixed":false,"ignore":false},
+    {"name":"","formId":398541,"x":150076.234375,"y":-88088.2890625,"z":1640.1759033203125,"fixed":false,"ignore":false},
+    {"name":"","formId":398542,"x":107361.703125,"y":-74719.5390625,"z":910.1870727539062,"fixed":false,"ignore":false},
+    {"name":"","formId":1618117,"x":-6590.0048828125,"y":18150.77734375,"z":3490.694091796875,"fixed":false,"ignore":false},
+    {"name":"","formId":398817,"x":-137468.921875,"y":2519.621337890625,"z":6948.8515625,"fixed":false,"ignore":false},
+    {"name":"","formId":398818,"x":-120998.96875,"y":26771.134765625,"z":10227.3798828125,"fixed":false,"ignore":false},
+    {"name":"","formId":398819,"x":-146164.09375,"y":35164.79296875,"z":13942.9833984375,"fixed":false,"ignore":false},
+    {"name":"","formId":398826,"x":-88894.9453125,"y":75322.5703125,"z":13670.283203125,"fixed":false,"ignore":false},
+    {"name":"","formId":398827,"x":-96341.609375,"y":46057.6484375,"z":9877.91015625,"fixed":false,"ignore":false},
+    {"name":"","formId":333325,"x":22505.849609375,"y":-14470.005859375,"z":4275.5244140625,"fixed":false,"ignore":false},
+    {"name":"","formId":1628356,"x":88181.3359375,"y":104473.4765625,"z":9851.34765625,"fixed":false,"ignore":false},
+    {"name":"","formId":1628359,"x":23547.599609375,"y":107514.40625,"z":6401.87158203125,"fixed":false,"ignore":false},
+    {"name":"","formId":399001,"x":122686.9296875,"y":-57728.05859375,"z":712.4056396484375,"fixed":false,"ignore":false},
+    {"name":"","formId":399019,"x":136998.984375,"y":-42674.55859375,"z":7510.59765625,"fixed":false,"ignore":false},
+    {"name":"","formId":1618500,"x":-157883.390625,"y":-51136.92578125,"z":1023.0916137695312,"fixed":false,"ignore":false},
+    {"name":"","formId":1618501,"x":-165790.015625,"y":-22401.345703125,"z":4945.55615234375,"fixed":false,"ignore":false},
+    {"name":"","formId":1618502,"x":-153185.890625,"y":2400.005126953125,"z":7426.37255859375,"fixed":false,"ignore":false},
+    {"name":"","formId":1618503,"x":-158668.375,"y":17175.6875,"z":8889.4208984375,"fixed":false,"ignore":false},
+    {"name":"","formId":1618504,"x":-194576.59375,"y":26228.734375,"z":5925.1259765625,"fixed":false,"ignore":false},
+    {"name":"","formId":1618505,"x":-202214.671875,"y":1288.3956298828125,"z":7381.740234375,"fixed":false,"ignore":false},
+    {"name":"","formId":1618506,"x":-177933.765625,"y":-18267.12890625,"z":5435.20068359375,"fixed":false,"ignore":false},
+    {"name":"","formId":333749,"x":-36001.39453125,"y":-9942.849609375,"z":4923.73095703125,"fixed":false,"ignore":false},
+    {"name":"","formId":344126,"x":-186551.671875,"y":14953.7685546875,"z":4675.412109375,"fixed":false,"ignore":false},
+    {"name":"","formId":395432,"x":80354.625,"y":27102.486328125,"z":2119.716552734375,"fixed":false,"ignore":false},
+    {"name":"","formId":395477,"x":125357.3203125,"y":14400.2900390625,"z":4282.0068359375,"fixed":false,"ignore":false},
+    {"name":"","formId":410610,"x":96512.5703125,"y":129143.3359375,"z":27016.23046875,"fixed":false,"ignore":false},
+    {"name":"","formId":370318,"x":-87320.8671875,"y":-5445.39306640625,"z":6729.1083984375,"fixed":false,"ignore":false},
+    {"name":"","formId":411043,"x":161489.734375,"y":30673.912109375,"z":5436.09375,"fixed":false,"ignore":false},
+    {"name":"","formId":411086,"x":112352.0859375,"y":149102.46875,"z":21431.541015625,"fixed":false,"ignore":false},
+    {"name":"","formId":411094,"x":140283.9375,"y":104319.2265625,"z":18552.685546875,"fixed":false,"ignore":false},
+    {"name":"","formId":159418,"x":30494.984375,"y":142150.875,"z":25440.158203125,"fixed":false,"ignore":false},
+    {"name":"","formId":159422,"x":71020.859375,"y":-26094.0703125,"z":1443.209716796875,"fixed":false,"ignore":false},
+    {"name":"","formId":159423,"x":-202755.453125,"y":-22498.0078125,"z":2038.662109375,"fixed":false,"ignore":false},
+    {"name":"","formId":159506,"x":107696,"y":96064,"z":7840,"fixed":false,"ignore":false},
+    {"name":"","formId":159507,"x":104616.8125,"y":-137432.9375,"z":22.773895263671875,"fixed":false,"ignore":false},
+    {"name":"","formId":1620843,"x":18266.619140625,"y":15213.751953125,"z":1141.925048828125,"fixed":false,"ignore":false},
+    {"name":"","formId":1620845,"x":38268.12109375,"y":130053,"z":16897.720703125,"fixed":false,"ignore":false},
+    {"name":"","formId":1620848,"x":72950.96875,"y":113880.265625,"z":16256.6796875,"fixed":false,"ignore":false},
+    {"name":"","formId":1615923,"x":125007.1484375,"y":-145395.1875,"z":3129.884033203125,"fixed":false,"ignore":false},
+    {"name":"","formId":336296,"x":-3285.33056640625,"y":-15645.8359375,"z":1629.400146484375,"fixed":false,"ignore":false},
+    {"name":"","formId":159991,"x":-62942.66015625,"y":84015.09375,"z":14557.5185546875,"fixed":false,"ignore":false},
+    {"name":"","formId":159992,"x":-50863.38671875,"y":2395.401611328125,"z":7920.20751953125,"fixed":false,"ignore":false},
+    {"name":"","formId":1621303,"x":-14858.0205078125,"y":-6143.5654296875,"z":4721.7548828125,"fixed":false,"ignore":false},
+    {"name":"","formId":351623,"x":-39688.4296875,"y":1589.4639892578125,"z":6147.8759765625,"fixed":false,"ignore":false},
+    {"name":"","formId":125091,"x":-144798.609375,"y":-16498.912109375,"z":11381.1650390625,"fixed":false,"ignore":false},
+    {"name":"","formId":402358,"x":64617.67578125,"y":-5149.447265625,"z":2909.82177734375,"fixed":false,"ignore":false},
+    {"name":"","formId":402360,"x":60005.15625,"y":9334.4912109375,"z":1088.9501953125,"fixed":false,"ignore":false},
+    {"name":"","formId":402362,"x":48126.35546875,"y":41295.46484375,"z":903.3193969726562,"fixed":false,"ignore":false},
+    {"name":"","formId":402364,"x":55484.09765625,"y":93189.625,"z":954.7640991210938,"fixed":false,"ignore":false},
+    {"name":"","formId":402368,"x":79333.5078125,"y":62531.8125,"z":4265.8583984375,"fixed":false,"ignore":false},
+    {"name":"","formId":1626912,"x":118888.6953125,"y":-100802.6640625,"z":4712.21484375,"fixed":false,"ignore":false},
+    {"name":"","formId":1626916,"x":138824.3125,"y":-133084.34375,"z":3410.793212890625,"fixed":false,"ignore":false},
+    {"name":"","formId":357102,"x":-70313.46875,"y":28187.689453125,"z":7060.0107421875,"fixed":false,"ignore":false},
+    {"name":"","formId":357256,"x":-84131.7421875,"y":17762.40234375,"z":5820.7548828125,"fixed":false,"ignore":false},
+    {"name":"","formId":402753,"x":-112409.6875,"y":67079.9296875,"z":23380.421875,"fixed":false,"ignore":false},
+    {"name":"","formId":161134,"x":37607.65234375,"y":155650.375,"z":24803.705078125,"fixed":false,"ignore":false},
+    {"name":"","formId":161135,"x":37983.34765625,"y":156036.046875,"z":24565.353515625,"fixed":false,"ignore":true},
+    {"name":"","formId":1617407,"x":30226.275390625,"y":1692.5350341796875,"z":4019.014404296875,"fixed":false,"ignore":false},
+    {"name":"","formId":161137,"x":36074.6953125,"y":155623.78125,"z":24472.708984375,"fixed":false,"ignore":true},
+    {"name":"","formId":161140,"x":37432.85546875,"y":154204.671875,"z":24496.640625,"fixed":false,"ignore":true},
+    {"name":"","formId":1617436,"x":79904.734375,"y":149113.65625,"z":34027.01171875,"fixed":false,"ignore":false},
+    {"name":"","formId":1607759,"x":5611.3310546875,"y":-6122.7978515625,"z":5685.6708984375,"fixed":false,"ignore":false},
+    {"name":"","formId":1618115,"x":42965.9140625,"y":-18390.56640625,"z":1662.5374755859375,"fixed":false,"ignore":false},
+    {"name":"","formId":398820,"x":-125678.4375,"y":49946.15234375,"z":19347.333984375,"fixed":false,"ignore":false},
+    {"name":"","formId":1618499,"x":-177901.140625,"y":-46889.640625,"z":4137.974609375,"fixed":false,"ignore":false},
+    {"name":"","formId":1619776,"x":78572.3125,"y":-100260.40625,"z":1661.990234375,"fixed":false,"ignore":false},
+    {"name":"","formId":1619778,"x":95890.6953125,"y":-132405.96875,"z":132.55226135253906,"fixed":false,"ignore":false},
+    {"name":"","formId":395453,"x":103537.6640625,"y":27295.3125,"z":3946.0556640625,"fixed":false,"ignore":false},
+    {"name":"","formId":410588,"x":-30065.298828125,"y":146012.6875,"z":32908.46484375,"fixed":false,"ignore":false},
+    {"name":"","formId":395499,"x":125138.296875,"y":-6033.13720703125,"z":5840.73583984375,"fixed":false,"ignore":false},
+    {"name":"","formId":1626509,"x":120386.0625,"y":60708.41015625,"z":1275.0576171875,"fixed":false,"ignore":false},
+    {"name":"","formId":1626548,"x":121662.9609375,"y":108618.8046875,"z":7764.806640625,"fixed":false,"ignore":false},
+    {"name":"","formId":1626566,"x":87901.9609375,"y":47462.109375,"z":2282.1201171875,"fixed":false,"ignore":false},
+    {"name":"","formId":402370,"x":83171.734375,"y":2814.776611328125,"z":957.9786376953125,"fixed":false,"ignore":false},
+    {"name":"","formId":402748,"x":-80493.7265625,"y":116829.34375,"z":19001.509765625,"fixed":false,"ignore":false},
+    {"name":"","formId":402749,"x":-79923.4609375,"y":100300.0234375,"z":16159.2646484375,"fixed":false,"ignore":false},
+    {"name":"","formId":398824,"x":-64205.21875,"y":133134.109375,"z":28962.486328125,"fixed":false,"ignore":false},
+    {"name":"","formId":1628358,"x":-4725.54736328125,"y":103228.625,"z":7554.90576171875,"fixed":false,"ignore":false},
+    {"name":"","formId":399078,"x":181619.96875,"y":-40454.046875,"z":3917.16748046875,"fixed":false,"ignore":false},
+    {"name":"","formId":369526,"x":-90052.828125,"y":4506.63330078125,"z":7258.080078125,"fixed":false,"ignore":false},
+    {"name":"","formId":1619774,"x":113091.1640625,"y":-153306.796875,"z":3306.113525390625,"fixed":false,"ignore":false},
+    {"name":"","formId":410638,"x":5706.87890625,"y":146405.203125,"z":28230.611328125,"fixed":false,"ignore":false},
+    {"name":"","formId":410646,"x":-59881.5078125,"y":153499.375,"z":40116.82421875,"fixed":false,"ignore":false},
+    {"name":"","formId":1620850,"x":-25535.50390625,"y":72152.5703125,"z":6680.076171875,"fixed":false,"ignore":false},
+    {"name":"","formId":1626482,"x":111040.0859375,"y":71199.96875,"z":5595.734375,"fixed":false,"ignore":false},
+    {"name":"","formId":1626527,"x":127412.0390625,"y":76161.265625,"z":1352.9541015625,"fixed":false,"ignore":false},
+    {"name":"","formId":538323,"x":-38813.80859375,"y":84319.359375,"z":8664.7275390625,"fixed":false,"ignore":false},
+    {"name":"","formId":1626914,"x":105280.3671875,"y":-112374.234375,"z":3814.369140625,"fixed":false,"ignore":false},
+    {"name":"","formId":1626918,"x":132281.375,"y":-169258.828125,"z":2311.512451171875,"fixed":false,"ignore":false},
+    {"name":"","formId":402751,"x":-95777.4609375,"y":104231.0234375,"z":19513.4140625,"fixed":false,"ignore":false},
+    {"name":"","formId":398828,"x":-96440.0625,"y":34348.9296875,"z":14050.732421875,"fixed":false,"ignore":false},
+    {"name":"","formId":399039,"x":171190.5,"y":-9684.1875,"z":2540.18896484375,"fixed":false,"ignore":false},
+    {"name":"","formId":399057,"x":145071.6875,"y":23848.962890625,"z":9755.607421875,"fixed":false,"ignore":false},
+    {"name":"","formId":399103,"x":203310.078125,"y":-10068.916015625,"z":7752.30419921875,"fixed":false,"ignore":false},
+    {"name":"","formId":356408,"x":-54347.45703125,"y":14582.044921875,"z":5846.3193359375,"fixed":false,"ignore":false},
+    {"name":"","formId":1626920,"x":121965.1171875,"y":-174993.09375,"z":372.8039855957031,"fixed":false,"ignore":false},
+    {"name":"","formId":1626921,"x":141293.578125,"y":-101356.3515625,"z":3079.345458984375,"fixed":false,"ignore":false},
+    {"name":"","formId":332386,"x":-18051.392578125,"y":-22607.421875,"z":2291.93212890625,"fixed":false,"ignore":false},
+    {"name":"","formId":1618118,"x":-36115.1328125,"y":38693.50390625,"z":6171.63037109375,"fixed":false,"ignore":false},
+    {"name":"","formId":402366,"x":69197.140625,"y":85610.0078125,"z":5735.15771484375,"fixed":false,"ignore":false},
+    // @TODO: Missing one random gate still
+];
+
 const rebuildQuestsTable = (saveFile = undefined) => {
     let qTable = document.getElementById('quest-table');
     let qBody = qTable.querySelector('tbody');
@@ -688,10 +818,10 @@ const rebuildLocsTable = (saveFile = undefined) => {
     for (const loc of locs) {
         let status = '✖';
         if (saveFile) {
-            
             let record = saveFile.records.find((e) => e.formId === loc.formId);
             if (record) {
-                if (record.subRecord.properties.find(p=>p.flag===51).value===3) {
+                let prop = record.subRecord.properties.find(p=>p.flag===51);
+                if (prop && prop.value===3) {
                     status = '✔';
                     ++completed;
                 }
@@ -712,9 +842,116 @@ const rebuildLocsTable = (saveFile = undefined) => {
 
     qFoot.querySelector('.total-completed').innerText = completed;
 };
+const rebuildSkillsTable = (saveFile = undefined) => {
+    let qTable = document.getElementById('skills-table');
+    let qBody = qTable.querySelector('tbody');
+    let qFoot = qTable.querySelector('tfoot');
+
+    [...qBody.querySelectorAll('tr')].forEach((e) => {
+        e.remove();
+    });
+
+    let completed = 0;
+    let record = undefined;
+    if (saveFile) {
+        record = saveFile.records.find((e) => e.formId===0x7);
+    }
+
+    for (const skill of skills) {
+        let status = '✖';
+
+        let skillLevel = 0;
+
+        if (record) {
+            skillLevel = record.subRecord[skill.key];
+            if (skillLevel >= 100) {
+                status = '✔';
+                ++completed;
+            }
+        }
+
+        let qTr = document.createElement('tr');
+        qTr.innerHTML = `
+<td class='status ${status}'>${status}</td>
+<td class='name'>${skill.name}</td>
+<td class='level'>${skillLevel}</td>
+`;
+        qBody.append(qTr);
+    }
+
+    qFoot.querySelector('.total-completed').innerText = completed;
+};
+const rebuildGatesTable = (saveFile = undefined) => {
+    let qTable = document.getElementById('gates-table');
+    let qBody = qTable.querySelector('tbody');
+    let qFoot = qTable.querySelector('tfoot');
+
+    [...qBody.querySelectorAll('tr')].forEach((e) => {
+        e.remove();
+    });
+
+    let completed = 0;
+
+    for (const gate of gates) {
+        if (gate.ignore) continue;
+
+        let status = '✖';
+        if (saveFile) {
+            let record = saveFile.records.find((e) => e.formId === gate.formId);
+            if (record) {
+                if (record.flags & 0x7000005 === 0x7000005) {
+                    status = '✔';
+                    ++completed;
+                }
+            }
+        }
+
+        let qTr = document.createElement('tr');
+        qTr.innerHTML = `
+<td class='status ${status}'>${status}</td>
+<td class='formId'>${gate.formId?('0000000'+gate.formId.toString(16)).substr(-8):'???'}</td>
+<td class='name'>${gate.name}</td>
+<td class='x'>${gate.x}</td>
+<td class='y'>${gate.y}</td>
+<td class='z'>${gate.z}</td>
+<td class='fixed'>${gate.fixed ? 'Yes' : 'No'}</td>
+`;
+        qBody.append(qTr);
+    }
+
+    qFoot.querySelector('.total-completed').innerText = completed;
+};
+
+const rebuildInfo = (saveFile) => {
+    const infoDiv = document.querySelector('body > .info');
+    for (const elem of [...infoDiv.querySelectorAll('.read')]) {
+        const key = [...elem.classList].filter(c=>c!=='read')[0];
+        const valDiv = elem.querySelector('.value');
+        valDiv.innerText = saveFile[key];
+    }
+    [...infoDiv.querySelectorAll('.screenshot > *')].forEach(e=>e.remove());
+    let canvas = document.createElement('canvas');
+    infoDiv.querySelector('.screenshot').append(canvas);
+    canvas.width = saveFile.screenshotWidth;
+    canvas.height = saveFile.screenshotHeight;
+    let ctx = canvas.getContext('2d');
+    let data = ctx.getImageData(0,0,canvas.width,canvas.height);
+    let ssOffset = 0;
+    let cOffset = 0;
+    for (; ssOffset < saveFile.screenshotSize; ++ssOffset, ++ssOffset) {
+        if (ssOffset % 3 === 2) {
+            data.data[cOffset] = 0;
+            ++cOffset;
+        }
+        data.data[cOffset] = saveFile.screenshotData[ssOffset];
+    }
+    ctx.putImageData(data, 0, 0);
+};
 document.addEventListener('DOMContentLoaded', () => {
     rebuildQuestsTable();
     rebuildLocsTable();
+    rebuildSkillsTable();
+    rebuildGatesTable();
     const ignoreEvent = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -739,6 +976,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.saveFile = saveFile;
                 rebuildQuestsTable(saveFile);
                 rebuildLocsTable(saveFile);
+                rebuildSkillsTable(saveFile);
+                rebuildGatesTable(saveFile);
+                rebuildInfo(saveFile);
             });
         }
     };

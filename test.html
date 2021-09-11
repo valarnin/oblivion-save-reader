@@ -7,16 +7,31 @@
     <script src="./test.js"></script>
   </head>
   <body style="margin:0;padding:0;min-width:100vw;min-height:100vh">
+    <div class="info">
+      <div class="read exeTime">Game EXE Time: <span class="value"></span></div>
+      <div class="read gameTime">Save Time: <span class="value"></span></div>
+      <div class="read pcName">Name: <span class="value"></span></div>
+      <div class="read pcLevel">Level: <span class="value"></span></div>
+      <div class="read pcLocation">Location: <span class="value"></span></div>
+      <div class="read pcLocationCell">Cell ID: <span class="value"></span></div>
+      <div class="read pcLocationX">X: <span class="value"></span></div>
+      <div class="read pcLocationY">Y: <span class="value"></span></div>
+      <div class="read pcLocationZ">Z: <span class="value"></span></div>
+      <div class="screenshot"></div>
+    </div>
     <table id='quest-table' border=1>
       <thead>
         <tr>
-          <td></td>
-          <td>ID</td>
-          <td>Form ID</td>
-          <td>Name</td>
-          <td>Stages</td>
-          <td>Fame</td>
-          <td>URL</td>
+          <th colspan=7 style="text-align:center">Quests</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>ID</th>
+          <th>Form ID</th>
+          <th>Name</th>
+          <th>Stages</th>
+          <th>Fame</th>
+          <th>URL</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -25,20 +40,171 @@
         <td colspan=2 class="total-fame"></td>
       </tfoot>
     </table>
+    <table id='skills-table' border=1>
+      <thead>
+        <tr>
+          <th colspan=3 style="text-align:center">Skills</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Level</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <td colspan=3 class="total-completed"></td>
+      </tfoot>
+    </table>
+    <table id='gates-table' border=1>
+      <thead>
+        <tr>
+          <th colspan=7 style="text-align:center">Oblivion Gates</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>Form ID</th>
+          <th>Name</th>
+          <th>X</th>
+          <th>Y</th>
+          <th>Z</th>
+          <th>Fixed Position</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <td colspan=7 class="total-completed"></td>
+      </tfoot>
+    </table>
+    <table id='horses-table' border=1>
+      <thead>
+        <tr>
+          <th colspan=3 style="text-align:center">Horses</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <td colspan=3 class="total-completed"></td>
+      </tfoot>
+    </table>
+    <table id='houses-table' border=1>
+      <thead>
+        <tr>
+          <th colspan=3 style="text-align:center">Houses</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <td colspan=3 class="total-completed"></td>
+      </tfoot>
+    </table>
+    <table id='investments-table' border=1>
+      <thead>
+        <tr>
+          <th colspan=3 style="text-align:center">Investments</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <td colspan=3 class="total-completed"></td>
+      </tfoot>
+    </table>
+    <table id='artifacts-table' border=1>
+      <thead>
+        <tr>
+          <th colspan=3 style="text-align:center">Artifacts</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <td colspan=3 class="total-completed"></td>
+      </tfoot>
+    </table>
+    <table id='books-table' border=1>
+      <thead>
+        <tr>
+          <th colspan=3 style="text-align:center">Skill Books</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <td colspan=3 class="total-completed"></td>
+      </tfoot>
+    </table>
     <table id='loc-table' border=1>
       <thead>
         <tr>
-          <td></td>
-          <td>Form ID</td>
-          <td>Name</td>
-          <td>X</td>
-          <td>Y</td>
-          <td>Z</td>
+          <th colspan=6 style="text-align:center">Locations</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>Form ID</th>
+          <th>Name</th>
+          <th>X</th>
+          <th>Y</th>
+          <th>Z</th>
         </tr>
       </thead>
       <tbody></tbody>
       <tfoot>
         <td colspan=6 class="total-completed"></td>
+      </tfoot>
+    </table>
+    <table id='fame-table' border=1>
+      <thead>
+        <tr>
+          <th colspan=3 style="text-align:center">Fame</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <td colspan=3 class="total-completed"></td>
+      </tfoot>
+    </table>
+    <table id='nirnroot-table' border=1>
+      <thead>
+        <tr>
+          <th colspan=3 style="text-align:center">Nirnroots</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <td colspan=3 class="total-completed"></td>
       </tfoot>
     </table>
   </body>
