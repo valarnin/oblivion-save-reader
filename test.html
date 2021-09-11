@@ -7,21 +7,69 @@
     <script src="./test.js"></script>
   </head>
   <body style="margin:0;padding:0;min-width:100vw;min-height:100vh">
-    <div class="info">
-      <div style="float:left">
-        <div class="read exeTime">Game EXE Time: <span class="value"></span></div>
-        <div class="read gameTime">Save Time: <span class="value"></span></div>
-        <div class="read pcName">Name: <span class="value"></span></div>
-        <div class="read pcLevel">Level: <span class="value"></span></div>
-        <div class="read pcLocation">Location: <span class="value"></span></div>
-        <div class="read pcLocationCell">Cell ID: <span class="value"></span></div>
-        <div class="read pcLocationX">X: <span class="value"></span></div>
-        <div class="read pcLocationY">Y: <span class="value"></span></div>
-        <div class="read pcLocationZ">Z: <span class="value"></span></div>
-      </div>
-      <div class="screenshot" style="float:left"></div>
-    </div>
-    <div style="clear:both"></div>
+    <table id='info-table' border=1>
+      <thead>
+        <tr>
+          <th colspan="2" style="text-align:center">Save Information</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="info">
+              <div style="float:left">
+                <div class="read exeTime">Game EXE Time: <span class="value"></span></div>
+                <div class="read gameTime">Save Time: <span class="value"></span></div>
+                <div class="read pcName">Name: <span class="value"></span></div>
+                <div class="read pcLevel">Level: <span class="value"></span></div>
+                <div class="read pcLocation">Location: <span class="value"></span></div>
+                <div class="read pcLocationCell">Cell ID: <span class="value"></span></div>
+                <div class="read pcLocationX">X: <span class="value"></span></div>
+                <div class="read pcLocationY">Y: <span class="value"></span></div>
+                <div class="read pcLocationZ">Z: <span class="value"></span></div>
+              </div>
+              <div class="screenshot" style="float:left"></div>
+            </div>
+            <div style="clear:both"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table id='statistics-table' border=1>
+      <thead>
+        <tr>
+          <th colspan="2" style="text-align:center">Player Statistics</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="read artifactsFound"><td>Artifacts Found</td><td><span class="value"></span></td>
+          <tr class="read attacks"><td>Attacks</td><td><span class="value"></span></td>
+          <tr class="read booksRead"><td>Books Read</td><td><span class="value"></span></td>
+          <tr class="read burglary"><td>Burglary</td><td><span class="value"></span></td>
+          <tr class="read capturedSouls"><td>Captured Souls</td><td><span class="value"></span></td>
+          <tr class="read disease"><td>Disease</td><td><span class="value"></span></td>
+          <tr class="read exploredPlaces"><td>Places Found</td><td><span class="value"></span></td>
+          <tr class="read horsesOwned"><td>Horses Owned</td><td><span class="value"></span></td>
+          <tr class="read hoursSlept"><td>Hours Slept</td><td><span class="value"></span></td>
+          <tr class="read hoursWaited"><td>Hours Waited</td><td><span class="value"></span></td>
+          <tr class="read housesOwned"><td>Houses Owned</td><td><span class="value"></span></td>
+          <tr class="read investments"><td>Investments</td><td><span class="value"></span></td>
+          <tr class="read jokesTold"><td>Jokes Told</td><td><span class="value"></span></td>
+          <tr class="read killedCreatures"><td>Killed Creatures</td><td><span class="value"></span></td>
+          <tr class="read killedPersons"><td>Killed Persons</td><td><span class="value"></span></td>
+          <tr class="read largestBounty"><td>Largest Bounty</td><td><span class="value"></span></td>
+          <tr class="read lockPicked"><td>Locks Picked</td><td><span class="value"></span></td>
+          <tr class="read mixedPotions"><td>Potions Mixed</td><td><span class="value"></span></td>
+          <tr class="read murder"><td>Murders</td><td><span class="value"></span></td>
+          <tr class="read nirnrootFound"><td>Nirnroot Found</td><td><span class="value"></span></td>
+          <tr class="read oblivionGatesClosed"><td>Oblivion Gates Closed</td><td><span class="value"></span></td>
+          <tr class="read pickpocketing"><td>Pockets Picked</td><td><span class="value"></span></td>
+          <tr class="read picksBroken"><td>Lockpicks Broken</td><td><span class="value"></span></td>
+          <tr class="read skillAdvances"><td>Skill Advances</td><td><span class="value"></span></td>
+          <tr class="read stolenHorses"><td>Horses Stolen</td><td><span class="value"></span></td>
+          <tr class="read teachingBooksRead"><td>Skill Books Read</td><td><span class="value"></span></td>
+      </tbody>
+    </table>
     <table id='quest-table' border=1>
       <thead>
         <tr>

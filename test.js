@@ -1251,7 +1251,7 @@ const rebuildBooksTable = (saveFile = undefined) => {
 };
 
 const rebuildInfo = (saveFile) => {
-    const infoDiv = document.querySelector('body > .info');
+    const infoDiv = document.querySelector('#info-table .info');
     for (const elem of [...infoDiv.querySelectorAll('.read')]) {
         const key = [...elem.classList].filter(c=>c!=='read')[0];
         const valDiv = elem.querySelector('.value');
@@ -1279,6 +1279,27 @@ const rebuildInfo = (saveFile) => {
     }
     ctx.putImageData(data, 0, 0);
 };
+
+
+const rebuildStatistics = (saveFile) => {
+    const record = saveFile.records.find(r=>r.formId===0x14);
+    if (record) {
+        const statDiv = document.querySelector('#statistics-table');
+        for (const elem of [...statDiv.querySelectorAll('.read')]) {
+            const key = [...elem.classList].filter(c=>c!=='read')[0];
+            const valDiv = elem.querySelector('.value');
+            let val = record.subRecord?.player?.statistics[key];
+            if (val === undefined) {
+                val = '?';
+            }
+            if (val instanceof Date) {
+                val = val.toISOString();
+            }
+            valDiv.innerText = val;
+        }
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     rebuildQuestsTable();
     rebuildLocsTable();
@@ -1318,6 +1339,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 rebuildBooksTable(saveFile);
 
                 rebuildInfo(saveFile);
+                rebuildStatistics(saveFile);
             });
         }
     };
