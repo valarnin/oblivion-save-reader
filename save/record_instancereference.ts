@@ -121,7 +121,7 @@ export class RecordInstanceReference {
                 offset += 4;
             }
             if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
-            if (record.flags & 0x8) {
+            if (record.flags & 0x8 && !(record.flags & 0x2 || record.flags & 0x4)) {
                 this.havokMoved_cell = bufToInt(buf.slice(offset, offset + 4));
                 offset += 4;
                 this.havokMoved_x = bufToFloat(buf.slice(offset, offset + 4));
