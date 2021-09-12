@@ -1371,6 +1371,7 @@ const greaterPowers = [
     {formId:0x0006B6A1,name:'Skein of Magnus'},
     {formId:0x0006B6A2,name:'Shield of Shezarr'},
     {formId:0x0006B6A3,name:'Dragon Dream'},
+    {formId:0x00014D23,name:'Pilgrim\'s Grace'},
 ];
 
 // This is really sketchy, just hoping these indexes are always the same between saves
@@ -1926,7 +1927,7 @@ const rebuildPowersTable = (saveFile = undefined) => {
         let qTr = document.createElement('tr');
         qTr.innerHTML = `
 <td class='status ${status}'>${status}</td>
-<td class='formId'>${power.formId}</td>
+<td class='formId'>${('0000000'+power.formId.toString(16)).substr(-8)}</td>
 <td class='name'>${power.name}</td>
 `;
         qBody.append(qTr);
