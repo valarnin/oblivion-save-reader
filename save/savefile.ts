@@ -4,7 +4,7 @@ import Global from "./global";
 import QuickKey from "./quickkey";
 import Record from "./record";
 import Region from "./region";
-import { bufToString, bufToByte, bufToDate, bufToInt, bufTobzString, bufToShort, bufToFloat, bufToArray, bufTobString } from "./util";
+import { SaveBuffer } from "./util";
 
 export class SaveFile {
     // File header
@@ -98,129 +98,114 @@ export class SaveFile {
     worldSpacesNum: number;
     worldSpaces: number[];
 
-    constructor(buf: ArrayBuffer) {
-        let offset = 0;
+    constructor(arrayBuf: ArrayBuffer) {
+        const buf = new SaveBuffer(arrayBuf, 0);
         // File header
-        this.fileId = bufToString(buf.slice(offset, offset + 12));                          offset += 12;
-        this.majorVersion = bufToByte(buf.slice(offset, offset + 1));                       offset += 1;
-        this.minorVersion = bufToByte(buf.slice(offset, offset + 1));                       offset += 1;
-        this.exeTime = bufToDate(buf.slice(offset, offset + 16));                           offset += 16;
+        this.fileId = buf.readString(12);
+        this.majorVersion = buf.readByte();
+        this.minorVersion = buf.readByte();
+        this.exeTime = buf.readDate();
 
         // Save header
-        this.headerVersion = bufToInt(buf.slice(offset, offset + 4));                       offset += 4;
-        this.saveHeaderSize = bufToInt(buf.slice(offset, offset + 4));                      offset += 4;
-        this.saveNum = bufToInt(buf.slice(offset, offset + 4));                             offset += 4;
-        this.pcName = bufTobzString(buf.slice(offset, offset + 64));                        offset += bufToByte(buf.slice(offset, offset + 1)) + 1;
-        this.pcLevel = bufToShort(buf.slice(offset, offset + 2));                           offset += 2;
-        this.pcLocation = bufTobzString(buf.slice(offset, offset + 64));                    offset += bufToByte(buf.slice(offset, offset + 1)) + 1;
-        this.gameDays = bufToFloat(buf.slice(offset, offset + 4));                          offset += 4;
+        this.headerVersion = buf.readInt();
+        this.saveHeaderSize = buf.readInt();
+        this.saveNum = buf.readInt();
+        this.pcName = buf.readbzString();
+        this.pcLevel = buf.readShort();
+        this.pcLocation = buf.readbzString();
+        this.gameDays = buf.readFloat();
 
-        this.gameTicks = bufToInt(buf.slice(offset, offset + 4));                           offset += 4;
-        this.gameTime = bufToDate(buf.slice(offset, offset + 16));                          offset += 16;
-        this.screenshotSize = bufToInt(buf.slice(offset, offset + 4));                      offset += 4;
-        this.screenshotWidth = bufToInt(buf.slice(offset, offset + 4));                     offset += 4;
-        this.screenshotHeight = bufToInt(buf.slice(offset, offset + 4));                    offset += 4;
-        this.screenshotData = 
-            bufToArray(buf.slice(offset, offset + this.screenshotSize - 8));                offset += this.screenshotSize - 8;
+        this.gameTicks = buf.readInt();
+        this.gameTime = buf.readDate();
+        this.screenshotSize = buf.readInt();
+        this.screenshotWidth = buf.readInt();
+        this.screenshotHeight = buf.readInt();
+        this.screenshotData = buf.readByteArray(this.screenshotSize - 8);
 
         // Plugins
-        this.pluginsNum = bufToByte(buf.slice(offset, offset + 1));                         offset += 1;
-        this.plugins = [];
-        for (let i = 0; i < this.pluginsNum; ++i) {
-            this.plugins.push(bufTobString(buf.slice(offset, offset + 64)));
-            offset += bufToByte(buf.slice(offset, offset + 1)) + 1;
-        }
+        this.pluginsNum = buf.readByte();
+        this.plugins = buf.readbStringArray(this.pluginsNum);
 
         // Global
-        this.formIdsOffset = bufToInt(buf.slice(offset, offset + 4));                       offset += 4;
+        this.formIdsOffset = buf.readInt();
 
-        this.recordsNum = bufToInt(buf.slice(offset, offset + 4));                          offset += 4;
-        this.nextObjectid = bufToInt(buf.slice(offset, offset + 4));                        offset += 4;
-        this.worldId = bufToInt(buf.slice(offset, offset + 4));                             offset += 4;
-        this.worldX = bufToInt(buf.slice(offset, offset + 4));                              offset += 4;
-        this.worldY = bufToInt(buf.slice(offset, offset + 4));                              offset += 4;
+        this.recordsNum = buf.readInt();
+        this.nextObjectid = buf.readInt();
+        this.worldId = buf.readInt();
+        this.worldX = buf.readInt();
+        this.worldY = buf.readInt();
 
-        this.pcLocationCell = bufToInt(buf.slice(offset, offset + 4));                      offset += 4;
-        this.pcLocationX = bufToFloat(buf.slice(offset, offset + 4));                       offset += 4;
-        this.pcLocationY = bufToFloat(buf.slice(offset, offset + 4));                       offset += 4;
-        this.pcLocationZ = bufToFloat(buf.slice(offset, offset + 4));                       offset += 4;
+        this.pcLocationCell = buf.readInt();
+        this.pcLocationX = buf.readFloat();
+        this.pcLocationY = buf.readFloat();
+        this.pcLocationZ = buf.readFloat();
         
-        this.globalsNum = bufToShort(buf.slice(offset, offset + 2));                        offset += 2;
+        this.globalsNum = buf.readShort();
         this.globals = [];
         for (let i = 0; i < this.globalsNum; ++i) {
-            this.globals.push(new Global(buf, offset));                                     offset += 8;
+            this.globals.push(new Global(buf));
         }
         
-        this.tesClassSize = bufToShort(buf.slice(offset, offset + 2));                      offset += 2;
-        this.numDeathCounts = bufToInt(buf.slice(offset, offset + 4));                      offset += 4;
+        this.tesClassSize = buf.readShort();
+        this.numDeathCounts = buf.readInt();
         this.deathCounts = [];
         for (let i = 0; i < this.numDeathCounts; ++i) {
-            this.deathCounts.push(new DeathCount(buf, offset));                             offset += 6;
+            this.deathCounts.push(new DeathCount(buf));
         }
-        this.gameModeSeconds = bufToFloat(buf.slice(offset, offset + 4));                   offset += 4;
+        this.gameModeSeconds = buf.readFloat();
 
-        this.processesSize = bufToShort(buf.slice(offset, offset + 2));                     offset += 2;
-        this.processesData = bufToArray(buf.slice(offset, offset + this.processesSize));    offset += this.processesSize;
+        this.processesSize = buf.readShort();
+        this.processesData = buf.readByteArray(this.processesSize);
 
-        this.specEventSize = bufToShort(buf.slice(offset, offset + 2));                     offset += 2;
-        this.specEventData = bufToArray(buf.slice(offset, offset + this.specEventSize));    offset += this.specEventSize;
+        this.specEventSize = buf.readShort();
+        this.specEventData = buf.readByteArray(this.specEventSize);
 
-        this.weatherSize = bufToShort(buf.slice(offset, offset + 2));                       offset += 2;
-        this.weatherData = bufToArray(buf.slice(offset, offset + this.weatherSize));        offset += this.weatherSize;
-        this.playerCombatCount = bufToInt(buf.slice(offset, offset + 4));                   offset += 4;
-        this.createdNum = bufToInt(buf.slice(offset, offset + 4));                          offset += 4;
+        this.weatherSize = buf.readShort();
+        this.weatherData = buf.readByteArray(this.weatherSize);
+        this.playerCombatCount = buf.readInt();
+        this.createdNum = buf.readInt();
         this.createdData = [];
         for (let i = 0; i < this.createdNum; ++i) {
-            const created = new CreatedData(buf, offset);
-            this.createdData.push(created);
-            offset += 20 + created.dataSize;
+            this.createdData.push(new CreatedData(buf));
         }
-        this.quickKeysSize = bufToShort(buf.slice(offset, offset + 2));                     offset += 2;
-        let quickKeysEnd = offset + this.quickKeysSize;
+        this.quickKeysSize = buf.readShort();
+        let quickKeysEnd = buf.offset + this.quickKeysSize;
         this.quickKeysData = [];
-        while (offset < quickKeysEnd) {
-            const qk = new QuickKey(buf, offset);
-            this.quickKeysData.push(qk);
-            offset++;
-            if (qk.flag & 1) offset += 4;
+        while (buf.offset < quickKeysEnd) {
+            this.quickKeysData.push(new QuickKey(buf));
         }
 
-        this.reticuleSize = bufToShort(buf.slice(offset, offset + 2));                      offset += 2;
-        this.reticuleData = bufToArray(buf.slice(offset, offset + this.reticuleSize));      offset += this.reticuleSize;
-        this.interfaceSize = bufToShort(buf.slice(offset, offset + 2));                     offset += 2;
-        this.interfaceData = bufToArray(buf.slice(offset, offset + this.interfaceSize));    offset += this.interfaceSize;
-        this.regionsSize = bufToShort(buf.slice(offset, offset + 2));                       offset += 2;
-        this.regionsNum = bufToShort(buf.slice(offset, offset + 2));                        offset += 2;
+        this.reticuleSize = buf.readShort();
+        this.reticuleData = buf.readByteArray(this.reticuleSize);
+        this.interfaceSize = buf.readShort();
+        this.interfaceData = buf.readByteArray(this.interfaceSize);
+        this.regionsSize = buf.readShort();
+        this.regionsNum = buf.readShort();
         this.regions = [];
         for (let i = 0; i < this.regionsNum; ++i) {
-            this.regions.push(new Region(buf, offset));                                     offset += 8;
+            this.regions.push(new Region(buf));
         }
 
         // Change Records
         // For performance, this works differently
         this.records = [];
         for (let i = 0; i < this.recordsNum; ++i) {
-            const record = new Record(buf, offset);
+            // Don't pass original SaveBuffer object due to bugs/unknowns in record parsing
+            const record = new Record(new SaveBuffer(buf.buffer, buf.offset));
             this.records.push(record);
-            offset += 12 + record.dataSize;
+            buf.advance(12 + record.dataSize);
         }
 
         // Temporary Effects
-        this.tempEffectsSize = bufToInt(buf.slice(offset, offset + 4));                     offset += 4;
-        this.tempEffectsData = bufToArray(buf.slice(offset, offset + this.tempEffectsSize));offset += this.tempEffectsSize;
+        this.tempEffectsSize = buf.readInt();
+        this.tempEffectsData = buf.readByteArray(this.tempEffectsSize);
 
         // Form IDs
-        this.formIdsNum = bufToInt(buf.slice(offset, offset + 4));                          offset += 4;
-        this.formIds = [];
-        for (let i = 0; i < this.formIdsNum; ++i) {
-            this.formIds.push(bufToInt(buf.slice(offset, offset + 4)));                     offset += 4;
-        }
+        this.formIdsNum = buf.readInt();
+        this.formIds = buf.readIntArray(this.formIdsNum);
 
         // World Spaces
-        this.worldSpacesNum = bufToInt(buf.slice(offset, offset + 4));                      offset += 4;
-        this.worldSpaces = [];
-        for (let i = 0; i < this.worldSpacesNum; ++i) {
-            this.worldSpaces.push(bufToInt(buf.slice(offset, offset + 4)));                 offset += 4;
-        }
+        this.worldSpacesNum = buf.readInt();
+        this.worldSpaces = buf.readIntArray(this.worldSpacesNum);
     }
 }

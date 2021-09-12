@@ -1,4 +1,4 @@
-import { bufToString, bufToInt, bufToArray } from "./util";
+import { SaveBuffer } from "./util";
 
 export default class CreatedData {
     type = '';
@@ -8,12 +8,12 @@ export default class CreatedData {
     version = 0;
     data: number[] = [];
 
-     constructor(buf: ArrayBuffer, offset: number) {
-        this.type = bufToString(buf.slice(offset, offset + 4));            offset += 4;
-        this.dataSize = bufToInt(buf.slice(offset, offset + 4));           offset += 4;
-        this.flags = bufToInt(buf.slice(offset, offset + 4));              offset += 4;
-        this.formid = bufToInt(buf.slice(offset, offset + 4));          offset += 4;
-        this.version = bufToInt(buf.slice(offset, offset + 4));         offset += 4;
-        this.data = bufToArray(buf.slice(offset, offset + this.dataSize)); offset += this.dataSize;
+     constructor(buf: SaveBuffer) {
+        this.type = buf.readString(4);
+        this.dataSize = buf.readInt();
+        this.flags = buf.readInt();
+        this.formid = buf.readInt();
+        this.version = buf.readInt();
+        this.data = buf.readByteArray(this.dataSize);
     }
 }

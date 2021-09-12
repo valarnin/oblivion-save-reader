@@ -8,7 +8,7 @@ import { RecordFaction } from "./record_faction";
 import { RecordGeneric } from "./record_generic";
 import { RecordInstanceReference } from "./record_instancereference";
 import { RecordQuest } from "./record_quest";
-import { bufToInt, bufToByte, bufToShort, bufToArray } from "./util";
+import { SaveBuffer } from "./util";
 
 export enum RecordType {
     Faction = 6,
@@ -41,22 +41,23 @@ export default class Record {
     flags = 0;
     version = 0;
     dataSize = 0;
-    data: number[] = [];
+    data?: number[];
     subRecord?: RecordBook | RecordFaction | RecordGeneric | RecordCreature | RecordCell | RecordDialog | RecordAI;
 
-    constructor(buf: ArrayBuffer, offset: number) {
-        this.formId = bufToInt(buf.slice(offset, offset + 4));             offset += 4;
-        this.type = bufToByte(buf.slice(offset, offset + 1));              offset += 1;
-        this.flags = bufToInt(buf.slice(offset, offset + 4));              offset += 4;
-        this.version = bufToByte(buf.slice(offset, offset + 1));           offset += 1;
-        this.dataSize = bufToShort(buf.slice(offset, offset + 2));         offset += 2;
-        this.data = bufToArray(buf.slice(offset, offset + this.dataSize));
+    constructor(buf: SaveBuffer) {
+        this.formId = buf.readInt();
+        this.type = buf.readByte();
+        this.flags = buf.readInt();
+        this.version = buf.readByte();
+        this.dataSize = buf.readShort();
+        let clone = buf.clone();
+        this.data = buf.readByteArray(this.dataSize);
         switch(this.type) {
             case RecordType.Book:
-                this.subRecord = new RecordBook(this, buf, offset);
+                this.subRecord = new RecordBook(this, clone);
                 break;
             case RecordType.Faction:
-                this.subRecord = new RecordFaction(this, buf, offset);
+                this.subRecord = new RecordFaction(this, clone);
                 break;
             case RecordType.AlchemicalApparatus:
             case RecordType.Armor:
@@ -69,32 +70,32 @@ export default class Record {
             case RecordType.Potion:
             case RecordType.Weapon:
             case RecordType.Key:
-                this.subRecord = new RecordGeneric(this, buf, offset);
+                this.subRecord = new RecordGeneric(this, clone);
                 break;
             case RecordType.NPC:
             case RecordType.Creature:
-                this.subRecord = new RecordCreature(this, buf, offset);
+                this.subRecord = new RecordCreature(this, clone);
                 break;
             case RecordType.Cell:
-                this.subRecord = new RecordCell(this, buf, offset);
+                this.subRecord = new RecordCell(this, clone);
                 break;
             case RecordType.InstanceReference:
-                this.subRecord = new RecordInstanceReference(this, buf, offset);
+                this.subRecord = new RecordInstanceReference(this, clone);
                 break;
             case RecordType.CharacterReference:
             case RecordType.CreatureReference:
-                this.subRecord = new RecordCreatureReference(this, buf, offset);
+                this.subRecord = new RecordCreatureReference(this, clone);
                 break;
             case RecordType.Dialog:
-                this.subRecord = new RecordDialog(this, buf, offset);
+                this.subRecord = new RecordDialog(this, clone);
                 break;
             case RecordType.Quest:
-                this.subRecord = new RecordQuest(this, buf, offset);
+                this.subRecord = new RecordQuest(this, clone);
                 break;
             case RecordType.AI:
-                this.subRecord = new RecordAI(this, buf, offset);
+                this.subRecord = new RecordAI(this, clone);
                 break;
         }
-        offset += this.dataSize;
+        if (this.subRecord) delete this.data;
     }
 }

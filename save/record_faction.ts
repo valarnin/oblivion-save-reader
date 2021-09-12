@@ -1,5 +1,5 @@
 import Record from "./record";
-import { bufToByte, bufToInt, bufToShort } from "./util";
+import { SaveBuffer } from "./util";
 
 type Reaction = {
     unknown1: number;
@@ -10,15 +10,12 @@ export class RecordFaction {
     reactionsNum?: number;
     reactions: Reaction[] = [];
     flags?: number;
-    constructor(record: Record, buf: ArrayBuffer, offset: number) {
+    constructor(record: Record, buf: SaveBuffer) {
         if (record.flags & 0x8) {
-            this.reactionsNum = bufToShort(buf.slice(offset, offset + 2));
-            offset += 2;
+            this.reactionsNum = buf.readShort();
             for (let i = 0; i < this.reactionsNum; ++i) {
-                let u1 = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
-                let u2 = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
+                let u1 = buf.readInt();
+                let u2 = buf.readInt();
                 this.reactions.push({
                     unknown1: u1,
                     unknown2: u2,
@@ -26,8 +23,7 @@ export class RecordFaction {
             }
         }
         if (record.flags & 0x4) {
-            this.flags = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
+            this.flags = buf.readByte();
         }
     }
 }

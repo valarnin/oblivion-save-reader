@@ -1,5 +1,5 @@
 import Record from "./record";
-import { bufToArray, bufToByte, bufToFloat, bufToInt, bufToShort } from "./util";
+import { SaveBuffer } from "./util";
 
 export class RecordQuest {
     flags?: number;
@@ -18,22 +18,17 @@ export class RecordQuest {
     dataNum?: number;
     dataUnknown?: number;
     data: number[][] = [];
-    constructor(record: Record, buf: ArrayBuffer, offset: number) {
-        const startOffset = offset;
+    constructor(record: Record, buf: SaveBuffer) {
+        const startOffset = buf.offset;
         if (record.flags & 0x4) {
-            this.flags = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
+            this.flags = buf.readByte();
         }
         if (record.flags & 0x10000000) {
-            this.stageNum = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
+            this.stageNum = buf.readByte();
             for (let i = 0; i < this.stageNum; ++i) {
-                let index = bufToByte(buf.slice(offset, offset + 1));
-                offset += 1;
-                let flag = bufToByte(buf.slice(offset, offset + 1));
-                offset += 1;
-                let entryNum = bufToByte(buf.slice(offset, offset + 1));
-                offset += 1;
+                let index = buf.readByte();
+                let flag = buf.readByte();
+                let entryNum = buf.readByte();
                 let entries: {
                     entryNum: number;
                     entryValFloat: number;
@@ -41,12 +36,15 @@ export class RecordQuest {
                     entryValByteArray: number[];
                 }[] = [];
                 for (let j = 0; j < entryNum; ++j) {
-                    let entryFlag = bufToByte(buf.slice(offset, offset + 1));
-                    offset += 1;
-                    let entryValFloat = bufToFloat(buf.slice(offset, offset + 4));
-                    let entryValInt = bufToInt(buf.slice(offset, offset + 4));
-                    let entryValByteArray = bufToArray(buf.slice(offset, offset + 4));
-                    offset += 4;
+                    let entryFlag = buf.readByte();
+                    // Read from a clone of buf for the other two since it's the same data represented 3 ways
+                    let tmp = buf.clone();
+
+                    let entryValFloat = buf.readFloat();
+
+                    let entryValInt = tmp.readInt();
+                    let entryValByteArray = tmp.readByteArray(4);
+
                     entries.push({
                         entryNum: entryFlag,
                         entryValFloat: entryValFloat,
@@ -63,14 +61,11 @@ export class RecordQuest {
             }
         }
         if (record.flags & 0x8000000) {
-            this.dataNum = bufToShort(buf.slice(offset, offset + 2));
-            offset += 2;
-            this.dataUnknown = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
+            this.dataNum = buf.readShort();
+            this.dataUnknown = buf.readByte();
             for (let i = 0; i < this.dataNum; ++i) {
-                this.data.push(bufToArray(buf.slice(offset, offset + 12)));
-                offset += 12;
-                if (offset > (startOffset + record.dataSize)) {
+                this.data.push(buf.readByteArray(12));
+                if (buf.offset > (startOffset + record.dataSize)) {
                     console.log('subrecord for quest record has invalid data', record);
                     break;
                 }

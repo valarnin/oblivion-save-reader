@@ -1,13 +1,13 @@
-import { bufToByte, bufToInt } from "./util";
+import { SaveBuffer } from "./util";
 
 export default class QuickKey {
     flag = 0;
     iref = 0;
 
-    constructor(buf: ArrayBuffer, offset: number) {
-        this.flag = bufToByte(buf.slice(offset, offset + 1)); offset += 1;
+    constructor(buf: SaveBuffer) {
+        this.flag = buf.readByte();
         if (this.flag & 1) {
-            this.iref = bufToInt(buf.slice(offset, offset + 4));  offset += 4;
+            this.iref = buf.readInt();
         }
     }
 }

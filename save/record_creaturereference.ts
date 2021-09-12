@@ -1,6 +1,6 @@
 import getProps from "./properties";
 import Record from "./record";
-import { bufToArray, bufTobString, bufToByte, bufTobzString, bufToDouble, bufToFloat, bufToInt, bufToShort, bufToString } from "./util";
+import { SaveBuffer } from "./util";
 
 class PlayerObject {
     statistics: {
@@ -166,206 +166,204 @@ class PlayerObject {
     customClass_flags?: number;
     customClass_services?: number;
 
-    constructor(buf: ArrayBuffer, offset: number, maxOffset: number) {
+    constructor(buf: SaveBuffer, maxOffset: number) {
         this.statistics = {
-            skillAdvances: bufToInt(buf.slice(offset, offset += 4)),
-            unknown1: bufToInt(buf.slice(offset, offset += 4)),
-            largestBounty: bufToInt(buf.slice(offset, offset += 4)),
-            killedCreatures: bufToInt(buf.slice(offset, offset += 4)),
-            killedPersons: bufToInt(buf.slice(offset, offset += 4)),
-            exploredPlaces: bufToInt(buf.slice(offset, offset += 4)),
-            lockPicked: bufToInt(buf.slice(offset, offset += 4)),
-            picksBroken: bufToInt(buf.slice(offset, offset += 4)),
-            capturedSouls: bufToInt(buf.slice(offset, offset += 4)),
-            usedIngredients: bufToInt(buf.slice(offset, offset += 4)),
-            mixedPotions: bufToInt(buf.slice(offset, offset += 4)),
-            oblivionGatesClosed: bufToInt(buf.slice(offset, offset += 4)),
-            horsesOwned: bufToInt(buf.slice(offset, offset += 4)),
-            housesOwned: bufToInt(buf.slice(offset, offset += 4)),
-            investments: bufToInt(buf.slice(offset, offset += 4)),
-            booksRead: bufToInt(buf.slice(offset, offset += 4)),
-            teachingBooksRead: bufToInt(buf.slice(offset, offset += 4)),
-            artifactsFound: bufToInt(buf.slice(offset, offset += 4)),
-            hoursSlept: bufToInt(buf.slice(offset, offset += 4)),
-            hoursWaited: bufToInt(buf.slice(offset, offset += 4)),
-            unknown2: bufToInt(buf.slice(offset, offset += 4)),
-            unknown3: bufToInt(buf.slice(offset, offset += 4)),
-            unknown4: bufToInt(buf.slice(offset, offset += 4)),
-            jokesTold: bufToInt(buf.slice(offset, offset += 4)),
-            disease: bufToInt(buf.slice(offset, offset += 4)),
-            nirnrootFound: bufToInt(buf.slice(offset, offset += 4)),
-            burglary: bufToInt(buf.slice(offset, offset += 4)),
-            pickpocketing: bufToInt(buf.slice(offset, offset += 4)),
-            unknown5: bufToInt(buf.slice(offset, offset += 4)),
-            attacks: bufToInt(buf.slice(offset, offset += 4)),
-            murder: bufToInt(buf.slice(offset, offset += 4)),
-            stolenHorses: bufToInt(buf.slice(offset, offset += 4)),
-            unknown6: bufToInt(buf.slice(offset, offset += 4)),
-            unknown7: bufToInt(buf.slice(offset, offset += 4)),
-            unknown8: bufToInt(buf.slice(offset, offset += 4)),
-            unknown9: bufToInt(buf.slice(offset, offset += 4)),
+            skillAdvances: buf.readInt(),
+            unknown1: buf.readInt(),
+            largestBounty: buf.readInt(),
+            killedCreatures: buf.readInt(),
+            killedPersons: buf.readInt(),
+            exploredPlaces: buf.readInt(),
+            lockPicked: buf.readInt(),
+            picksBroken: buf.readInt(),
+            capturedSouls: buf.readInt(),
+            usedIngredients: buf.readInt(),
+            mixedPotions: buf.readInt(),
+            oblivionGatesClosed: buf.readInt(),
+            horsesOwned: buf.readInt(),
+            housesOwned: buf.readInt(),
+            investments: buf.readInt(),
+            booksRead: buf.readInt(),
+            teachingBooksRead: buf.readInt(),
+            artifactsFound: buf.readInt(),
+            hoursSlept: buf.readInt(),
+            hoursWaited: buf.readInt(),
+            unknown2: buf.readInt(),
+            unknown3: buf.readInt(),
+            unknown4: buf.readInt(),
+            jokesTold: buf.readInt(),
+            disease: buf.readInt(),
+            nirnrootFound: buf.readInt(),
+            burglary: buf.readInt(),
+            pickpocketing: buf.readInt(),
+            unknown5: buf.readInt(),
+            attacks: buf.readInt(),
+            murder: buf.readInt(),
+            stolenHorses: buf.readInt(),
+            unknown6: buf.readInt(),
+            unknown7: buf.readInt(),
+            unknown8: buf.readInt(),
+            unknown9: buf.readInt(),
         };
-        if (offset > maxOffset) return;
-        this.unknown1 = bufToByte(buf.slice(offset, offset += 1));
-        this.unknown2 = bufToArray(buf.slice(offset, offset += 95));
-        this.unknown3 = bufToArray(buf.slice(offset, offset += 22));
-        this.pcBirthsign = bufToInt(buf.slice(offset, offset += 4));
+        if (buf.offset > maxOffset) return;
+        this.unknown1 = buf.readByte();
+        this.unknown2 = buf.readByteArray(95);
+        this.unknown3 = buf.readByteArray(22);
+        this.pcBirthsign = buf.readInt();
         this.unknownArray = [];
         for (let i = 0; i < 13; ++i) {
-            this.unknownArray.push(bufToInt(buf.slice(offset, offset += 4)));
+            this.unknownArray.push(buf.readInt());
         }
-        if (offset > maxOffset) return;
-        this.num2 = bufToShort(buf.slice(offset, offset += 2));
-        this.unknown4 = bufToArray(buf.slice(offset, offset += 2));
+        if (buf.offset > maxOffset) return;
+        this.num2 = buf.readShort();
+        this.unknown4 = buf.readByteArray(2);
         this.unknown5 = [];
         for (let i = 0; i < this.num2; ++i) {
-            this.unknown5.push(bufToArray(buf.slice(offset, offset += 4)));
+            this.unknown5.push(buf.readByteArray(4));
         }
-        if (offset > maxOffset) return;
-        this.unknown6 = bufToArray(buf.slice(offset, offset += 2));
-        this.randODoorsNum = bufToShort(buf.slice(offset, offset += 2));
+        if (buf.offset > maxOffset) return;
+        this.unknown6 = buf.readByteArray(2);
+        this.randODoorsNum = buf.readShort();
         this.randODoors = [];
         for (let i = 0; i < this.randODoorsNum; ++i) {
             this.randODoors.push({
-                door: bufToInt(buf.slice(offset, offset += 4)),
-                flag: bufToByte(buf.slice(offset, offset += 1)),
+                door: buf.readInt(),
+                flag: buf.readByte(),
             });
         }
-        if (offset > maxOffset) return;
-        this.unknown7 = bufToArray(buf.slice(offset, offset += 2));
-        this.activeEffectsNum = bufToShort(buf.slice(offset, offset += 2));
+        if (buf.offset > maxOffset) return;
+        this.unknown7 = buf.readByteArray(2);
+        this.activeEffectsNum = buf.readShort();
         this.activeEffects = [];
         for (let i = 0; i < this.activeEffectsNum; ++i) {
-            let size = bufToShort(buf.slice(offset, offset += 2));
+            let size = buf.readShort();
             this.activeEffects.push({
                 size: size,
-                reference: bufToInt(buf.slice(offset, offset += 4)),
-                index: bufToByte(buf.slice(offset, offset += 1)),
-                effectDetails: bufToArray(buf.slice(offset, offset += size)),
+                reference: buf.readInt(),
+                index: buf.readByte(),
+                effectDetails: buf.readByteArray(size),
             });
         }
-        if (offset > maxOffset) return;
+        if (buf.offset > maxOffset) return;
         this.expPoints = {
-            armorer: bufToFloat(buf.slice(offset, offset += 4)),
-            athletics: bufToFloat(buf.slice(offset, offset += 4)),
-            blade: bufToFloat(buf.slice(offset, offset += 4)),
-            block: bufToFloat(buf.slice(offset, offset += 4)),
-            blunt: bufToFloat(buf.slice(offset, offset += 4)),
-            handToHand: bufToFloat(buf.slice(offset, offset += 4)),
-            heavyArmor: bufToFloat(buf.slice(offset, offset += 4)),
-            alchemy: bufToFloat(buf.slice(offset, offset += 4)),
-            alteration: bufToFloat(buf.slice(offset, offset += 4)),
-            conjuration: bufToFloat(buf.slice(offset, offset += 4)),
-            destruction: bufToFloat(buf.slice(offset, offset += 4)),
-            illusion: bufToFloat(buf.slice(offset, offset += 4)),
-            mysticism: bufToFloat(buf.slice(offset, offset += 4)),
-            restoration: bufToFloat(buf.slice(offset, offset += 4)),
-            acrobatics: bufToFloat(buf.slice(offset, offset += 4)),
-            lightArmor: bufToFloat(buf.slice(offset, offset += 4)),
-            marksman: bufToFloat(buf.slice(offset, offset += 4)),
-            mercantile: bufToFloat(buf.slice(offset, offset += 4)),
-            security: bufToFloat(buf.slice(offset, offset += 4)),
-            sneak: bufToFloat(buf.slice(offset, offset += 4)),
-            speechcraft: bufToFloat(buf.slice(offset, offset += 4)),
+            armorer: buf.readFloat(),
+            athletics: buf.readFloat(),
+            blade: buf.readFloat(),
+            block: buf.readFloat(),
+            blunt: buf.readFloat(),
+            handToHand: buf.readFloat(),
+            heavyArmor: buf.readFloat(),
+            alchemy: buf.readFloat(),
+            alteration: buf.readFloat(),
+            conjuration: buf.readFloat(),
+            destruction: buf.readFloat(),
+            illusion: buf.readFloat(),
+            mysticism: buf.readFloat(),
+            restoration: buf.readFloat(),
+            acrobatics: buf.readFloat(),
+            lightArmor: buf.readFloat(),
+            marksman: buf.readFloat(),
+            mercantile: buf.readFloat(),
+            security: buf.readFloat(),
+            sneak: buf.readFloat(),
+            speechcraft: buf.readFloat(),
         };
-        if (offset > maxOffset) return;
-        this.advancement = bufToInt(buf.slice(offset, offset += 4));
+        if (buf.offset > maxOffset) return;
+        this.advancement = buf.readInt();
         this.attrSkillCounts = [];
         for (let i = 0; i < this.advancement; ++i) {
             this.attrSkillCounts.push({
-                strength: bufToByte(buf.slice(offset, offset += 1)),
-                intelligence: bufToByte(buf.slice(offset, offset += 1)),
-                willpower: bufToByte(buf.slice(offset, offset += 1)),
-                agility: bufToByte(buf.slice(offset, offset += 1)),
-                speed: bufToByte(buf.slice(offset, offset += 1)),
-                endurance: bufToByte(buf.slice(offset, offset += 1)),
-                personality: bufToByte(buf.slice(offset, offset += 1)),
-                luck: bufToByte(buf.slice(offset, offset += 1)),
+                strength: buf.readByte(),
+                intelligence: buf.readByte(),
+                willpower: buf.readByte(),
+                agility: buf.readByte(),
+                speed: buf.readByte(),
+                endurance: buf.readByte(),
+                personality: buf.readByte(),
+                luck: buf.readByte(),
             });
-            if (offset > maxOffset) return;
+            if (buf.offset > maxOffset) return;
         }
         this.specCounts = {
-            combat: bufToByte(buf.slice(offset, offset += 1)),
-            magic: bufToByte(buf.slice(offset, offset += 1)),
-            stealth: bufToByte(buf.slice(offset, offset += 1)),
+            combat: buf.readByte(),
+            magic: buf.readByte(),
+            stealth: buf.readByte(),
         };
-        if (offset > maxOffset) return;
+        if (buf.offset > maxOffset) return;
         this.skillUsage = {
-            armorer: bufToInt(buf.slice(offset, offset += 4)),
-            athletics: bufToInt(buf.slice(offset, offset += 4)),
-            blade: bufToInt(buf.slice(offset, offset += 4)),
-            block: bufToInt(buf.slice(offset, offset += 4)),
-            blunt: bufToInt(buf.slice(offset, offset += 4)),
-            handToHand: bufToInt(buf.slice(offset, offset += 4)),
-            heavyArmor: bufToInt(buf.slice(offset, offset += 4)),
-            alchemy: bufToInt(buf.slice(offset, offset += 4)),
-            alteration: bufToInt(buf.slice(offset, offset += 4)),
-            conjuration: bufToInt(buf.slice(offset, offset += 4)),
-            destruction: bufToInt(buf.slice(offset, offset += 4)),
-            illusion: bufToInt(buf.slice(offset, offset += 4)),
-            mysticism: bufToInt(buf.slice(offset, offset += 4)),
-            restoration: bufToInt(buf.slice(offset, offset += 4)),
-            acrobatics: bufToInt(buf.slice(offset, offset += 4)),
-            lightArmor: bufToInt(buf.slice(offset, offset += 4)),
-            marksman: bufToInt(buf.slice(offset, offset += 4)),
-            mercantile: bufToInt(buf.slice(offset, offset += 4)),
-            security: bufToInt(buf.slice(offset, offset += 4)),
-            sneak: bufToInt(buf.slice(offset, offset += 4)),
-            speechcraft: bufToInt(buf.slice(offset, offset += 4)),
+            armorer: buf.readInt(),
+            athletics: buf.readInt(),
+            blade: buf.readInt(),
+            block: buf.readInt(),
+            blunt: buf.readInt(),
+            handToHand: buf.readInt(),
+            heavyArmor: buf.readInt(),
+            alchemy: buf.readInt(),
+            alteration: buf.readInt(),
+            conjuration: buf.readInt(),
+            destruction: buf.readInt(),
+            illusion: buf.readInt(),
+            mysticism: buf.readInt(),
+            restoration: buf.readInt(),
+            acrobatics: buf.readInt(),
+            lightArmor: buf.readInt(),
+            marksman: buf.readInt(),
+            mercantile: buf.readInt(),
+            security: buf.readInt(),
+            sneak: buf.readInt(),
+            speechcraft: buf.readInt(),
         };
-        if (offset > maxOffset) return;
-        this.majorSkillAdv = bufToInt(buf.slice(offset, offset += 4));
-        this.unknown8 = bufToByte(buf.slice(offset, offset += 1));
-        this.activeQuest = bufToInt(buf.slice(offset, offset += 4));
-        this.knownTopicsNum = bufToShort(buf.slice(offset, offset += 2));
+        if (buf.offset > maxOffset) return;
+        this.majorSkillAdv = buf.readInt();
+        this.unknown8 = buf.readByte();
+        this.activeQuest = buf.readInt();
+        this.knownTopicsNum = buf.readShort();
         this.knownTopics = [];
         for (let i = 0; i < this.knownTopicsNum; ++i) {
-            this.knownTopics.push(bufToInt(buf.slice(offset, offset += 4)));
+            this.knownTopics.push(buf.readInt());
         }
-        if (offset > maxOffset) return;
-        this.openQuestsNum = bufToShort(buf.slice(offset, offset += 2));
+        if (buf.offset > maxOffset) return;
+        this.openQuestsNum = buf.readShort();
         this.openQuests = [];
         for (let i = 0; i < this.openQuestsNum; ++i) {
             this.openQuests.push({
-                quest: bufToInt(buf.slice(offset, offset += 4)),
-                questStage: bufToByte(buf.slice(offset, offset += 1)),
-                logEntry: bufToByte(buf.slice(offset, offset += 1)),
+                quest: buf.readInt(),
+                questStage: buf.readByte(),
+                logEntry: buf.readByte(),
             });
         }
-        if (offset > maxOffset) return;
-        this.magEffectNum = bufToInt(buf.slice(offset, offset += 4));
+        if (buf.offset > maxOffset) return;
+        this.magEffectNum = buf.readInt();
         this.magEffects = [];
         for (let i = 0; i < this.magEffectNum; ++i) {
-            this.magEffects.push({edid: bufToString(buf.slice(offset, offset += 4))});
-            if (offset > maxOffset) return;
+            this.magEffects.push({edid: buf.readString(4)});
+            if (buf.offset > maxOffset) return;
         }
     
-        this.fgGeoSym = bufToArray(buf.slice(offset, offset += 200));
-        this.fgGeoAsym = bufToArray(buf.slice(offset, offset += 120));
-        this.fgTexSym = bufToArray(buf.slice(offset, offset += 200));
-        this.race = bufToInt(buf.slice(offset, offset += 4));
-        this.hair = bufToInt(buf.slice(offset, offset += 4));
-        this.eyes = bufToInt(buf.slice(offset, offset += 4));
-        this.hairLength = bufToFloat(buf.slice(offset, offset += 4));
-        this.hairColor = bufToArray(buf.slice(offset, offset += 3));
-        this.unknown9 = bufToByte(buf.slice(offset, offset += 1));
-        this.gender = bufToByte(buf.slice(offset, offset += 1));
-        let nameLen = bufToByte(buf.slice(offset, offset += 1));
-        this.pcName = bufToString(buf.slice(offset, offset += nameLen));
-        offset += 1;
-        this.pcClass = bufToInt(buf.slice(offset, offset += 4));
-        this.customClass_favoredAttribute1 = bufToInt(buf.slice(offset, offset += 4));
-        this.customClass_favoredAttribute2 = bufToInt(buf.slice(offset, offset += 4));
-        this.customClass_specialization = bufToInt(buf.slice(offset, offset += 4));
-        this.customClass_majorSkill1 = bufToInt(buf.slice(offset, offset += 4));
-        this.customClass_majorSkill2 = bufToInt(buf.slice(offset, offset += 4));
-        this.customClass_majorSkill3 = bufToInt(buf.slice(offset, offset += 4));
-        this.customClass_majorSkill4 = bufToInt(buf.slice(offset, offset += 4));
-        this.customClass_majorSkill5 = bufToInt(buf.slice(offset, offset += 4));
-        this.customClass_majorSkill6 = bufToInt(buf.slice(offset, offset += 4));
-        this.customClass_majorSkill7 = bufToInt(buf.slice(offset, offset += 4));
-        this.customClass_flags = bufToInt(buf.slice(offset, offset += 4));
-        this.customClass_services = bufToInt(buf.slice(offset, offset += 4));
+        this.fgGeoSym = buf.readByteArray(200);
+        this.fgGeoAsym = buf.readByteArray(120);
+        this.fgTexSym = buf.readByteArray(200);
+        this.race = buf.readInt();
+        this.hair = buf.readInt();
+        this.eyes = buf.readInt();
+        this.hairLength = buf.readFloat();
+        this.hairColor = buf.readByteArray(3);
+        this.unknown9 = buf.readByte();
+        this.gender = buf.readByte();
+        this.pcName = buf.readbString();
+        this.pcClass = buf.readInt();
+        this.customClass_favoredAttribute1 = buf.readInt();
+        this.customClass_favoredAttribute2 = buf.readInt();
+        this.customClass_specialization = buf.readInt();
+        this.customClass_majorSkill1 = buf.readInt();
+        this.customClass_majorSkill2 = buf.readInt();
+        this.customClass_majorSkill3 = buf.readInt();
+        this.customClass_majorSkill4 = buf.readInt();
+        this.customClass_majorSkill5 = buf.readInt();
+        this.customClass_majorSkill6 = buf.readInt();
+        this.customClass_majorSkill7 = buf.readInt();
+        this.customClass_flags = buf.readInt();
+        this.customClass_services = buf.readInt();
     }
 };
 
@@ -440,9 +438,11 @@ export class RecordCreatureReference {
 
     player?: PlayerObject;
     
-    constructor(record: Record, buf: ArrayBuffer, offset: number) {
+    constructor(record: Record, buf: SaveBuffer) {
+        // Just a type assertion for TS
+        if (!record.data) return;
         try {
-            const startOffset = offset;
+            const startOffset = buf.offset;
             // Handle player data as a special case before anything else even though it's out-of-order
             if (record.formId === 0x14) {
                 let playerOffset = undefined;
@@ -451,133 +451,92 @@ export class RecordCreatureReference {
                         record.data[i] === 0x42 && record.data[i-1] === 0x96
                         && record.data[i-21] === 0x42 && record.data[i-22] === 0xec
                     ) {
-                        playerOffset = offset + i + 29;
+                        playerOffset = buf.offset + i + 29;
                         break;
                     }
                 }
                 if (playerOffset === undefined) {
                     debugger;
                 } else {
-                    this.player = new PlayerObject(buf, playerOffset, offset + record.dataSize);
+                    this.player = new PlayerObject(new SaveBuffer(buf.buffer, playerOffset), startOffset + record.dataSize);
                 }
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x80000000) {
-                this.cellChanged_cell = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.cellChanged_x = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.cellChanged_y = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.cellChanged_z = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.cellChanged_cell = buf.readInt();
+                this.cellChanged_x = buf.readFloat();
+                this.cellChanged_y = buf.readFloat();
+                this.cellChanged_z = buf.readFloat();
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x2) {
-                this.created_flags = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_baseItem = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_cell = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_x = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_y = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_z = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_rX = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_rY = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_rZ = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.created_flags = buf.readInt();
+                this.created_baseItem = buf.readInt();
+                this.created_cell = buf.readInt();
+                this.created_x = buf.readFloat();
+                this.created_y = buf.readFloat();
+                this.created_z = buf.readFloat();
+                this.created_rX = buf.readFloat();
+                this.created_rY = buf.readFloat();
+                this.created_rZ = buf.readFloat();
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x4) {
-                this.moved_cell = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.moved_cell = buf.readInt();
                 if (this.moved_cell === 0 && record.dataSize <= 5) {
-                    this.actorFlag = bufToByte(buf.slice(offset, offset + 1));
-                    offset += 1;
+                    this.actorFlag = buf.readByte();
                     return;
                 }
-                this.moved_x = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.moved_y = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.moved_z = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.moved_rX = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.moved_rY = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.moved_rZ = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.moved_x = buf.readFloat();
+                this.moved_y = buf.readFloat();
+                this.moved_z = buf.readFloat();
+                this.moved_rX = buf.readFloat();
+                this.moved_rY = buf.readFloat();
+                this.moved_rZ = buf.readFloat();
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x8 && !(record.flags & 0x2 || record.flags & 0x4)) {
-                this.havokMoved_cell = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.havokMoved_x = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.havokMoved_y = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.havokMoved_z = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.havokMoved_rX = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.havokMoved_rY = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.havokMoved_rZ = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.havokMoved_cell = buf.readInt();
+                this.havokMoved_x = buf.readFloat();
+                this.havokMoved_y = buf.readFloat();
+                this.havokMoved_z = buf.readFloat();
+                this.havokMoved_rX = buf.readFloat();
+                this.havokMoved_rY = buf.readFloat();
+                this.havokMoved_rZ = buf.readFloat();
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x800000) {
-                this.oblivionCell = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.oblivionCell = buf.readInt();
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.formId === 0x14) {
                 for (let i = 0; i < 71; ++i) {
-                    this.tempAttributeChanges_activeEffects.push(bufToFloat(buf.slice(offset, offset + 4)));
-                    offset += 4;
+                    this.tempAttributeChanges_activeEffects.push(buf.readFloat());
                 }
                 for (let i = 0; i < 71; ++i) {
-                    this.tempAttributeChanges_unknownEffects.push(bufToFloat(buf.slice(offset, offset + 4)));
-                    offset += 4;
+                    this.tempAttributeChanges_unknownEffects.push(buf.readFloat());
                 }
                 for (let i = 0; i < 71; ++i) {
-                    this.tempAttributeChanges_damageEffects.push(bufToFloat(buf.slice(offset, offset + 4)));
-                    offset += 4;
+                    this.tempAttributeChanges_damageEffects.push(buf.readFloat());
                 }
-                this.tempAttributeChanges_deltaHealth = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.tempAttributeChanges_deltaMagicka = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.tempAttributeChanges_deltaFatigue = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.tempAttributeChanges_deltaHealth = buf.readFloat();
+                this.tempAttributeChanges_deltaMagicka = buf.readFloat();
+                this.tempAttributeChanges_deltaFatigue = buf.readFloat();
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
-            this.actorFlag = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            this.actorFlag = buf.readByte();
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x1) {
-                this.flags = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.flags = buf.readInt();
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x8000000) {
-                this.inventory_itemNum = bufToShort(buf.slice(offset, offset + 2));
-                offset += 2;
+                this.inventory_itemNum = buf.readShort();
                 for (let i = 0; i < this.inventory_itemNum; ++i) {
-                    if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
-                    let iref = bufToInt(buf.slice(offset, offset + 4));
-                    offset += 4;
-                    let stackedItemsNum = bufToInt(buf.slice(offset, offset + 4));
-                    offset += 4;
-                    let changedEntriesNum = bufToInt(buf.slice(offset, offset + 4));
-                    offset += 4;
+                    if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+                    let iref = buf.readInt();
+                    let stackedItemsNum = buf.readInt();
+                    let changedEntriesNum = buf.readInt();
                     let changedEntries: {
                         propertiesNum: number;
                         properties: {
@@ -587,10 +546,12 @@ export class RecordCreatureReference {
                         }[];
                     }[] = [];
                     for (let j = 0; j < changedEntriesNum; ++j) {
-                        if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
-                        let [newOffset, properties] = getProps(offset, buf, startOffset + record.dataSize);
-                        offset = newOffset;
-                        changedEntries.push(properties);
+                        if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+                        let props = getProps(buf, startOffset + record.dataSize);
+                        changedEntries.push({
+                            propertiesNum: props[0],
+                            properties: props[1],
+                        });
                     }
                     this.inventory_items.push({
                         iref: iref,
@@ -600,26 +561,20 @@ export class RecordCreatureReference {
                     });
                 }
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
-            let [newOffset, properties] = getProps(offset, buf, startOffset + record.dataSize);
-            offset = newOffset;
-            this.propertiesNum = properties.propertiesNum;
-            this.properties = properties.properties;
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            [this.propertiesNum, this.properties] = getProps(buf, startOffset + record.dataSize);
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x8) {
-                this.havokMoved_dataLen = bufToShort(buf.slice(offset, offset + 2));
-                offset += 2;
-                this.havokMoved_data = bufToArray(buf.slice(offset, offset + this.havokMoved_dataLen));
-                offset += this.havokMoved_dataLen;
+                this.havokMoved_dataLen = buf.readShort();
+                this.havokMoved_data = buf.readByteArray(this.havokMoved_dataLen);
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x10) {
-                this.scale = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.scale = buf.readFloat();
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             this.enabled = (record.flags & 0x40000000) === 0x40000000;
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
         } catch (e) {
             console.log(e);
         }

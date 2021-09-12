@@ -1,6 +1,6 @@
 import getProps from "./properties";
 import Record from "./record";
-import { bufToArray, bufTobString, bufToByte, bufTobzString, bufToDouble, bufToFloat, bufToInt, bufToShort, bufToString } from "./util";
+import { SaveBuffer } from "./util";
 
 export class RecordInstanceReference {
     cellChanged_cell?: number;
@@ -64,101 +64,67 @@ export class RecordInstanceReference {
         value: any;
     }[] = [];
 
-    constructor(record: Record, buf: ArrayBuffer, offset: number) {
+    constructor(record: Record, buf: SaveBuffer) {
         try {
-            const startOffset = offset;
+            const startOffset = buf.offset;
             if (record.flags & 0x80000000) {
-                this.cellChanged_cell = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.cellChanged_x = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.cellChanged_y = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.cellChanged_z = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.cellChanged_cell = buf.readInt();
+                this.cellChanged_x = buf.readFloat();
+                this.cellChanged_y = buf.readFloat();
+                this.cellChanged_z = buf.readFloat();
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x2) {
-                this.created_flags = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_baseItem = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_cell = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_x = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_y = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_z = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_rX = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_rY = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.created_rZ = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.created_flags = buf.readInt();
+                this.created_baseItem = buf.readInt();
+                this.created_cell = buf.readInt();
+                this.created_x = buf.readFloat();
+                this.created_y = buf.readFloat();
+                this.created_z = buf.readFloat();
+                this.created_rX = buf.readFloat();
+                this.created_rY = buf.readFloat();
+                this.created_rZ = buf.readFloat();
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x4) {
-                this.moved_cell = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.moved_cell = buf.readInt();
                 if (this.moved_cell === 0 && record.dataSize <= 5) {
-                    this.actorFlag = bufToByte(buf.slice(offset, offset + 1));
-                    offset += 1;
+                    this.actorFlag = buf.readByte();
                     return;
                 }
-                this.moved_x = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.moved_y = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.moved_z = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.moved_rX = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.moved_rY = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.moved_rZ = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.moved_x = buf.readFloat();
+                this.moved_y = buf.readFloat();
+                this.moved_z = buf.readFloat();
+                this.moved_rX = buf.readFloat();
+                this.moved_rY = buf.readFloat();
+                this.moved_rZ = buf.readFloat();
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x8 && !(record.flags & 0x2 || record.flags & 0x4)) {
-                this.havokMoved_cell = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.havokMoved_x = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.havokMoved_y = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.havokMoved_z = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.havokMoved_rX = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.havokMoved_rY = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
-                this.havokMoved_rZ = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.havokMoved_cell = buf.readInt();
+                this.havokMoved_x = buf.readFloat();
+                this.havokMoved_y = buf.readFloat();
+                this.havokMoved_z = buf.readFloat();
+                this.havokMoved_rX = buf.readFloat();
+                this.havokMoved_rY = buf.readFloat();
+                this.havokMoved_rZ = buf.readFloat();
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x800000) {
-                this.oblivionCell = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.oblivionCell = buf.readInt();
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x1) {
-                this.flags = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.flags = buf.readInt();
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x8000000) {
-                this.inventory_itemNum = bufToShort(buf.slice(offset, offset + 2));
-                offset += 2;
+                this.inventory_itemNum = buf.readShort();
                 for (let i = 0; i < this.inventory_itemNum; ++i) {
-                    if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
-                    let iref = bufToInt(buf.slice(offset, offset + 4));
-                    offset += 4;
-                    let stackedItemsNum = bufToInt(buf.slice(offset, offset + 4));
-                    offset += 4;
-                    let changedEntriesNum = bufToInt(buf.slice(offset, offset + 4));
-                    offset += 4;
+                    if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+                    let iref = buf.readInt();
+                    let stackedItemsNum = buf.readInt();
+                    let changedEntriesNum = buf.readInt();
                     let changedEntries: {
                         propertiesNum: number;
                         properties: {
@@ -168,10 +134,12 @@ export class RecordInstanceReference {
                         }[];
                     }[] = [];
                     for (let j = 0; j < changedEntriesNum; ++j) {
-                        if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
-                        let [newOffset, properties] = getProps(offset, buf, startOffset + record.dataSize);
-                        offset = newOffset;
-                        changedEntries.push(properties);
+                        if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+                        let props = getProps(buf, startOffset + record.dataSize);
+                        changedEntries.push({
+                            propertiesNum: props[0],
+                            properties: props[1],
+                        });
                     }
                     this.inventory_items.push({
                         iref: iref,
@@ -181,26 +149,20 @@ export class RecordInstanceReference {
                     });
                 }
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
-            let [newOffset, properties] = getProps(offset, buf, startOffset + record.dataSize);
-            offset = newOffset;
-            this.propertiesNum = properties.propertiesNum;
-            this.properties = properties.properties;
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            [this.propertiesNum, this.properties] = getProps(buf, startOffset + record.dataSize);
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x8) {
-                this.havokMoved_dataLen = bufToShort(buf.slice(offset, offset + 2));
-                offset += 2;
-                this.havokMoved_data = bufToArray(buf.slice(offset, offset + this.havokMoved_dataLen));
-                offset += this.havokMoved_dataLen;
+                this.havokMoved_dataLen = buf.readShort();
+                this.havokMoved_data = buf.readByteArray(this.havokMoved_dataLen);
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x10) {
-                this.scale = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
+                this.scale = buf.readFloat();
             }
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             this.enabled = (record.flags & 0x40000000) === 0x40000000;
-            if (offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
         } catch (e) {
             console.log(e);
         }

@@ -1,5 +1,5 @@
 import Record from "./record";
-import { bufTobString, bufToByte, bufToFloat, bufToInt, bufToShort } from "./util";
+import { SaveBuffer } from "./util";
 
 export class RecordCreature {
     flags?: number;
@@ -66,56 +66,37 @@ export class RecordCreature {
 
     combatStyle?: number;
 
-    constructor(record: Record, buf: ArrayBuffer, offset: number) {
+    constructor(record: Record, buf: SaveBuffer) {
         if (record.flags & 0x1) {
-            this.flags = bufToInt(buf.slice(offset, offset + 4));
-            offset += 4;
+            this.flags = buf.readInt();
         }
 
         if (record.flags & 0x8) {
-            this.strength = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.intelligence = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.willpower = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.agility = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.speed = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.endurance = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.personality = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.luck = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
+            this.strength = buf.readByte();
+            this.intelligence = buf.readByte();
+            this.willpower = buf.readByte();
+            this.agility = buf.readByte();
+            this.speed = buf.readByte();
+            this.endurance = buf.readByte();
+            this.personality = buf.readByte();
+            this.luck = buf.readByte();
         }
 
         if (record.flags & 0x10) {
-            this.dataFlags = bufToInt(buf.slice(offset, offset + 4));
-            offset += 4;
-            this.baseMagicka = bufToShort(buf.slice(offset, offset + 2));
-            offset += 2;
-            this.baseFatigue = bufToShort(buf.slice(offset, offset + 2));
-            offset += 2;
-            this.barterGold = bufToShort(buf.slice(offset, offset + 2));
-            offset += 2;
-            this.level = bufToShort(buf.slice(offset, offset + 2));
-            offset += 2;
-            this.calcMin = bufToShort(buf.slice(offset, offset + 2));
-            offset += 2;
-            this.calcMax = bufToShort(buf.slice(offset, offset + 2));
-            offset += 2;
+            this.dataFlags = buf.readInt();
+            this.baseMagicka = buf.readShort();
+            this.baseFatigue = buf.readShort();
+            this.barterGold = buf.readShort();
+            this.level = buf.readShort();
+            this.calcMin = buf.readShort();
+            this.calcMax = buf.readShort();
         }
 
         if (record.flags & 0x40) {
-            this.factionsNum = bufToShort(buf.slice(offset, offset + 2));
-            offset += 2;
+            this.factionsNum = buf.readShort();
             for (let i = 0; i < this.factionsNum; ++i) {
-                let faction = bufToInt(buf.slice(offset, offset + 4));
-                offset += 4;
-                let factionRank = bufToByte(buf.slice(offset, offset + 1));
-                offset += 1;
+                let faction = buf.readInt();
+                let factionRank = buf.readByte();
                 this.factions.push({
                     faction: faction,
                     factionRank: factionRank,
@@ -124,38 +105,28 @@ export class RecordCreature {
         }
 
         if (record.flags & 0x20) {
-            this.spellCount = bufToShort(buf.slice(offset, offset + 2));
-            offset += 2;
+            this.spellCount = buf.readShort();
             for (let i = 0; i < this.spellCount; ++i) {
-                this.spellIds.push(bufToInt(buf.slice(offset, offset + 4)));
-                offset += 4;
+                this.spellIds.push(buf.readInt());
             }
         }
 
         if (record.flags & 0x100) {
-            this.aiData.push(bufToByte(buf.slice(offset, offset + 1)));
-            offset += 1;
-            this.aiData.push(bufToByte(buf.slice(offset, offset + 1)));
-            offset += 1;
-            this.aiData.push(bufToByte(buf.slice(offset, offset + 1)));
-            offset += 1;
-            this.aiData.push(bufToByte(buf.slice(offset, offset + 1)));
-            offset += 1;
+            this.aiData.push(buf.readByte());
+            this.aiData.push(buf.readByte());
+            this.aiData.push(buf.readByte());
+            this.aiData.push(buf.readByte());
         }
 
         if (record.flags & 0x4) {
-            this.baseHealth = bufToInt(buf.slice(offset, offset + 4));
-            offset += 4;
+            this.baseHealth = buf.readInt();
         }
 
         if (record.flags & 0x10000000) {
-            this.modCount = bufToShort(buf.slice(offset, offset + 2));
-            offset += 2;
+            this.modCount = buf.readShort();
             for (let i = 0; i < this.modCount; ++i) {
-                let index = bufToByte(buf.slice(offset, offset + 1));
-                offset += 1;
-                let mod = bufToFloat(buf.slice(offset, offset + 4));
-                offset += 4;
+                let index = buf.readByte();
+                let mod = buf.readFloat();
                 this.modifiers.push({
                     valueIndex: index,
                     modValue: mod,
@@ -164,58 +135,35 @@ export class RecordCreature {
         }
 
         if (record.flags & 0x80) {
-            this.fullName = bufTobString(buf.slice(offset, offset + 64));
-            offset += bufToByte(buf.slice(offset, offset + 1)) + 1;
+            this.fullName = buf.readbString();
         }
 
         if (record.flags & 0x200) {
-            this.armorer = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.athletics = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.blade = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.block = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.blunt = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.handToHand = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.heavyArmor = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.alchemy = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.alteration = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.conjuration = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.destruction = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.illusion = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.mysticism = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.restoration = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.acrobatics = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.lightArmor = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.marksman = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.mercantile = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.security = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.sneak = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
-            this.speechcraft = bufToByte(buf.slice(offset, offset + 1));
-            offset += 1;
+            this.armorer = buf.readByte();
+            this.athletics = buf.readByte();
+            this.blade = buf.readByte();
+            this.block = buf.readByte();
+            this.blunt = buf.readByte();
+            this.handToHand = buf.readByte();
+            this.heavyArmor = buf.readByte();
+            this.alchemy = buf.readByte();
+            this.alteration = buf.readByte();
+            this.conjuration = buf.readByte();
+            this.destruction = buf.readByte();
+            this.illusion = buf.readByte();
+            this.mysticism = buf.readByte();
+            this.restoration = buf.readByte();
+            this.acrobatics = buf.readByte();
+            this.lightArmor = buf.readByte();
+            this.marksman = buf.readByte();
+            this.mercantile = buf.readByte();
+            this.security = buf.readByte();
+            this.sneak = buf.readByte();
+            this.speechcraft = buf.readByte();
         }
 
         if (record.flags & 0x400) {
-            this.combatStyle = bufToInt(buf.slice(offset, offset + 4));
-            offset += 4;
+            this.combatStyle = buf.readInt();
         }
     }
 }
