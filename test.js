@@ -7,7 +7,7 @@ const quests = [
     {id:'MQ01',formId:0x0001E723,name:'Tutorial',stages:[84, 100],fame:0,url:'https://en.uesp.net/wiki/Oblivion:Tutorial'},
     {id:'MQ02',formId:0x0001E724,name:'Deliver the Amulet',stages:[100],fame:1,url:'https://en.uesp.net/wiki/Oblivion:Deliver_the_Amulet'},
     {id:'MQ03',formId:0x0001E725,name:'Find the Heir',stages:[100],fame:0,url:'https://en.uesp.net/wiki/Oblivion:Find_the_Heir'},
-    {id:'MS48',formId:0x000224D8,name:'Breaking the Siege of Kvatch',stages:[200],fame:1,url:'https://en.uesp.net/wiki/Oblivion:Breaking_the_Siege_of_Kvatch'},
+    {id:'MS48',formId:0x000224D8,name:'Breaking the Siege of Kvatch',stages:[100],fame:1,url:'https://en.uesp.net/wiki/Oblivion:Breaking_the_Siege_of_Kvatch'},
     {id:'MS49',formId:0x00028C72,name:'The Battle for Castle Kvatch',stages:[100],fame:1,url:'https://en.uesp.net/wiki/Oblivion:The_Battle_for_Castle_Kvatch'},
     {id:'MQ04',formId:0x0001E726,name:'Weynon Priory',stages:[100],fame:1,url:'https://en.uesp.net/wiki/Oblivion:Weynon_Priory_(quest)'},
     {id:'MQ05',formId:0x0001E727,name:'The Path of Dawn',stages:[100],fame:1,url:'https://en.uesp.net/wiki/Oblivion:The_Path_of_Dawn'},
@@ -1341,6 +1341,60 @@ const arena = [
     {formId:0x0003B1DE,name:'22nd fight/grand champ promo, light raiment?',fame:10,ignore:true},
 ];
 
+const factions = [
+    {formId:0x0001dbcd,name:'Player Faction',maxRankName:'',maxRank:0,ignore:true},
+    {formId:0x0002228f,name:'Fighters Guild',maxRankName:'Master',maxRank:9,ignore:false},
+    {formId:0x00022296,name:'Mages Guild',maxRankName:'Arch-Mage',maxRank:9,ignore:false},
+    {formId:0x00024164,name:'Thieves Guild',maxRankName:'Gray Fox',maxRank:7,ignore:false},
+    {formId:0x00026de8,name:'Dark Brotherhood Player Secret Faction',maxRankName:'',maxRank:0,ignore:true},
+    {formId:0x000274ab,name:'Blades',maxRankName:'Knight Brother|Knight Sister',maxRank:0,ignore:false},
+    {formId:0x000299b9,name:'Arena',maxRankName:'Grand Champion',maxRank:8,ignore:false},
+    {formId:0x0002f872,name:'Dark Brotherhood',maxRankName:'Listener',maxRank:7,ignore:false},
+    {formId:0x0002ff29,name:'Blackwood Company',maxRankName:'',maxRank:0,ignore:true},
+    {formId:0x000335b0,name:'Knights of the Thorn',maxRankName:'Honorary Knight',maxRank:0,ignore:false},
+    {formId:0x0003ab39,name:'Imperial City Waterfront Resident',maxRankName:'',maxRank:0,ignore:true},
+    {formId:0x0003cd10,name:'Anyone wearing Bands of the Chosen',maxRankName:'',maxRank:0,ignore:true},
+    {formId:0x0003cd27,name:'Put the player or anyone hated in this faction',maxRankName:'',maxRank:0,ignore:true},
+    {formId:0x0004ce4d,name:'Faction for all friendlies in MQ16',maxRankName:'',maxRank:0,ignore:true},
+    {formId:0x000904e3,name:'Dark Brotherhood No Guards Allowed Club',maxRankName:'',maxRank:0,ignore:true},
+    {formId:0x000908ab,name:'Mazoga Friend',maxRankName:'',maxRank:0,ignore:true},
+    {formId:0x000908c0,name:'Knights of the White Stallion',maxRankName:'Knight-Errant',maxRank:0,ignore:false},
+    {formId:0x000980dd,name:'Order of the Virtuous Blood',maxRankName:'Brother|Sister',maxRank:0,ignore:false},
+    {formId:0x000add4b,name:'Order of the Dragon',maxRankName:'Champion of Cyrodiil',maxRank:0,ignore:false},
+];
+
+const greaterPowers = [
+    {formId:0x0006B69E,name:'Jone\'s Shadow'},
+    {formId:0x0006B69D,name:'Gates of Aetherius'},
+    {formId:0x0006B69F,name:'Jode\'s Blood'},
+    {formId:0x0006B6A0,name:'Sithian Web'},
+    {formId:0x0006B6A1,name:'Skein of Magnus'},
+    {formId:0x0006B6A2,name:'Shield of Shezarr'},
+    {formId:0x0006B6A3,name:'Dragon Dream'},
+];
+
+// This is really sketchy, just hoping these indexes are always the same between saves
+// They might vary depending on if SI DLC is loaded or not???
+// Found by changing the values to something unique via console command `set MaraFame to 9001`, etc
+const wayshrines = [
+    {globalIndex:47,name:'Mara'},
+    {globalIndex:48,name:'Stendarr'},
+    {globalIndex:49,name:'Arkay'},
+    {globalIndex:50,name:'Dibella'},
+    {globalIndex:51,name:'Akatosh'},
+    {globalIndex:52,name:'Tiber Septim'},
+    {globalIndex:53,name:'Zenithar'},
+    {globalIndex:54,name:'Kynareth'},
+    {globalIndex:55,name:'Julianos'},
+];
+
+const incompleteQuests = [
+    {id:'TGExpelled',formId:0x0001E868,name:'Cast out of the Thieves Guild',stages:[10,20,30,40],failStages:[],url:'https://en.uesp.net/wiki/Oblivion:Cast_out_of_the_Thieves_Guild'},
+    {id:'Dark19Whispers',formId:0x00030064,name:'Whispers of Death',stages:[10],failStages:[],url:'https://en.uesp.net/wiki/Oblivion:Whispers_of_Death'},
+    {id:'ArenaDialogue',formId:0x000E0C91,name:'The Arena',stages:[100],failStages:[],url:'https://en.uesp.net/wiki/Oblivion:Arena_(faction)'},
+    {id:'FG00Expulsion',formId:0x00025E27,name:'Expelled from the Fighters Guild',stages:[60],failStages:[100],url:'https://en.uesp.net/wiki/Oblivion:Expelled_from_the_Fighters_Guild'},
+];
+
 const rebuildQuestsTable = (saveFile = undefined) => {
     let qTable = document.getElementById('quest-table');
     let qBody = qTable.querySelector('tbody');
@@ -1360,7 +1414,7 @@ const rebuildQuestsTable = (saveFile = undefined) => {
             let record = saveFile.records.find((e) => e.formId === quest.formId);
             if (record) {
                 for (const stage of record.subRecord.stage) {
-                    if (quest.stages.includes(stage.index)) {
+                    if (quest.stages.includes(stage.index) && stage.flag&0x1) {
                         status = '✔';
                         ++completed;
                         fame += quest.fame;
@@ -1385,6 +1439,56 @@ const rebuildQuestsTable = (saveFile = undefined) => {
 
     qFoot.querySelector('.total-completed').innerText = completed;
     qFoot.querySelector('.total-fame').innerText = fame;
+};
+
+const rebuildIncompleteQuestsTable = (saveFile = undefined) => {
+    let qTable = document.getElementById('incomplete-table');
+    let qBody = qTable.querySelector('tbody');
+    let qFoot = qTable.querySelector('tfoot');
+
+    [...qBody.querySelectorAll('tr')].forEach((e) => {
+        e.remove();
+    });
+
+    let completed = 0;
+    let fame = 0;
+
+    for (const quest of incompleteQuests) {
+        let status = '✖';
+        if (saveFile) {
+            
+            let record = saveFile.records.find((e) => e.formId === quest.formId);
+            if (record) {
+                for (const stage of record.subRecord.stage) {
+                    if (quest.stages.includes(stage.index) && stage.flag & 0x1 === 0x1) {
+                        status = '✔';
+                        break;
+                    }
+                }
+                for (const stage of record.subRecord.stage) {
+                    if (quest.failStages.includes(stage.index) && stage.flag & 0x1 === 0x1) {
+                        status = '❗';
+                        break;
+                    }
+                }
+                if (status === '✔') ++completed;
+            }
+        }
+
+        let qTr = document.createElement('tr');
+        qTr.innerHTML = `
+<td class='status ${status}'>${status}</td>
+<td class='id'>${quest.id}</td>
+<td class='formId'>${('0000000'+quest.formId.toString(16)).substr(-8)}</td>
+<td class='name'>${quest.name}</td>
+<td class='stages'>${quest.stages.join('<br>')}</td>
+<td class='failStages'>${quest.failStages.join('<br>')}</td>
+<td class='url'><a href="${quest.url}">UESP</a></td>
+`;
+        qBody.append(qTr);
+    }
+
+    qFoot.querySelector('.total-completed').innerText = completed;
 };
 
 const rebuildLocsTable = (saveFile = undefined) => {
@@ -1696,9 +1800,11 @@ const rebuildArtifactsTable = (saveFile = undefined) => {
         if (saveFile) {
             let record = saveFile.records.find((e) => e.formId === quest.formId);
             if (record) {
-                if (quest.stages.includes(100)) {
-                    status = '✔';
-                    ++completed;
+                for (const stage of record.subRecord.stage) {
+                    if (stage.index === 100 && stage.flag&0x1) {
+                        status = '✔';
+                        ++completed;
+                    }
                 }
             }
         }
@@ -1792,6 +1898,79 @@ const rebuildArenaTable = (saveFile = undefined) => {
     qFoot.querySelector('.total-fame').innerText = fame;
 };
 
+const rebuildPowersTable = (saveFile = undefined) => {
+    let qTable = document.getElementById('powers-table');
+    let qBody = qTable.querySelector('tbody');
+    let qFoot = qTable.querySelector('tfoot');
+
+    [...qBody.querySelectorAll('tr')].forEach((e) => {
+        e.remove();
+    });
+
+    let completed = 0;
+    let record = undefined;
+    if (saveFile) {
+        record = saveFile.records.find((e) => e.formId===0x7);
+    }
+
+    for (const power of greaterPowers) {
+        let status = '✖';
+
+        if (record) {
+            if (record.subRecord.spellIds.map(i=>saveFile.formIds[i]??i).includes(power.formId)) {
+                status = '✔';
+                ++completed;
+            }
+        }
+
+        let qTr = document.createElement('tr');
+        qTr.innerHTML = `
+<td class='status ${status}'>${status}</td>
+<td class='formId'>${power.formId}</td>
+<td class='name'>${power.name}</td>
+`;
+        qBody.append(qTr);
+    }
+
+    qFoot.querySelector('.total-completed').innerText = completed;
+};
+
+const rebuildWayshrinesTable = (saveFile = undefined) => {
+    let qTable = document.getElementById('wayshrines-table');
+    let qBody = qTable.querySelector('tbody');
+    let qFoot = qTable.querySelector('tfoot');
+
+    [...qBody.querySelectorAll('tr')].forEach((e) => {
+        e.remove();
+    });
+
+    let completed = 0;
+
+    for (const shrine of wayshrines) {
+        let status = '✖';
+
+        let fameLevel = 0;
+
+        if (saveFile) {
+            fameLevel = saveFile.globals[shrine.globalIndex]?.value;
+            if (fameLevel > 0) {
+                status = '✔';
+                ++completed;
+            }
+        }
+
+        let qTr = document.createElement('tr');
+        qTr.innerHTML = `
+<td class='status ${status}'>${status}</td>
+<td class='name'>${shrine.name}</td>
+<td class='fameLevel'>${fameLevel}</td>
+`;
+        qBody.append(qTr);
+    }
+
+    qFoot.querySelector('.total-completed').innerText = completed;
+};
+
 const rebuildFameTable = (saveFile = undefined) => {
     let qTable = document.getElementById('fame-table');
     let qBody = qTable.querySelector('tbody');
@@ -1813,7 +1992,7 @@ const rebuildFameTable = (saveFile = undefined) => {
             let record = saveFile.records.find((e) => e.formId === quest.formId);
             if (record) {
                 for (const stage of record.subRecord.stage) {
-                    if (quest.stages.includes(stage.index)) {
+                    if (quest.stages.includes(stage.index) && stage.flag&0x1) {
                         questsCurrent += quest.fame;
                         totalCurrent += quest.fame;
                         break;
@@ -1888,6 +2067,50 @@ const rebuildFameTable = (saveFile = undefined) => {
     qTotalRow.querySelector('.max').innerText = totalMax;
 };
 
+const rebuildFactionsTable = (saveFile = undefined) => {
+    let qTable = document.getElementById('factions-table');
+    let qBody = qTable.querySelector('tbody');
+    let qFoot = qTable.querySelector('tfoot');
+
+    [...qBody.querySelectorAll('tr')].forEach((e) => {
+        e.remove();
+    });
+
+    let completed = 0;
+    let record = undefined;
+    if (saveFile) {
+        record = saveFile.records.find((e) => e.formId===0x7);
+    }
+
+    for (const faction of factions) {
+        if (faction.ignore) continue;
+        let status = '✖';
+        let rank = 0;
+        if (saveFile) {
+            if (record) {
+                rank = record.subRecord?.factions?.find(f=>saveFile.formIds[f.faction]===faction.formId)?.factionRank;
+                if (rank === faction.maxRank) {
+                    status = '✔';
+                    ++completed;
+                }
+            }
+        }
+
+        let qTr = document.createElement('tr');
+        qTr.innerHTML = `
+<td class='status ${status}'>${status}</td>
+<td class='formId'>${faction.formId?('0000000'+faction.formId.toString(16)).substr(-8):'???'}</td>
+<td class='name'>${faction.name}</td>
+<td class='maxRankName'>${faction.maxRankName}</td>
+<td class='curRank'>${rank}</td>
+<td class='maxRank'>${faction.maxRank}</td>
+`;
+        qBody.append(qTr);
+    }
+
+    qFoot.querySelector('.total-completed').innerText = completed;
+};
+
 const rebuildStatistics = (saveFile) => {
     const record = saveFile.records.find(r=>r.formId===0x14);
     if (record) {
@@ -1920,6 +2143,10 @@ document.addEventListener('DOMContentLoaded', () => {
     rebuildNirnrootTable();
     rebuildArenaTable();
     rebuildFameTable();
+    rebuildFactionsTable();
+    rebuildPowersTable();
+    rebuildWayshrinesTable();
+    rebuildIncompleteQuestsTable();
     const ignoreEvent = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -1954,6 +2181,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 rebuildNirnrootTable(saveFile);
                 rebuildArenaTable(saveFile);
                 rebuildFameTable(saveFile);
+                rebuildFactionsTable(saveFile);
+                rebuildPowersTable(saveFile);
+                rebuildWayshrinesTable(saveFile);
+                rebuildIncompleteQuestsTable(saveFile);
 
                 rebuildInfo(saveFile);
                 rebuildStatistics(saveFile);
