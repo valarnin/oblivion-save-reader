@@ -42,22 +42,24 @@ export default class Record {
     version = 0;
     dataSize = 0;
     data?: number[];
-    subRecord?: RecordBook | RecordFaction | RecordGeneric | RecordCreature | RecordCell | RecordDialog | RecordAI;
 
-    constructor(buf: SaveBuffer) {
-        this.formId = buf.readInt();
-        this.type = buf.readByte();
-        this.flags = buf.readInt();
-        this.version = buf.readByte();
-        this.dataSize = buf.readShort();
-        let clone = buf.clone();
-        this.data = buf.readByteArray(this.dataSize);
+    parsedSubRecord?: RecordBook | RecordFaction | RecordGeneric | RecordCreature | RecordCell | RecordDialog | RecordAI;
+
+    get subRecord(): RecordBook | RecordFaction | RecordGeneric | RecordCreature | RecordCell | RecordDialog | RecordAI | undefined {
+        if (!this.data) return this.parsedSubRecord;
+
+        const tmpBuffer = new ArrayBuffer(this.dataSize);
+        const tmpView = new Uint8Array(tmpBuffer);
+        for (let i = 0; i < this.dataSize; ++i) tmpView[i] = this.data[i];
+
+        const clone = new SaveBuffer(tmpBuffer, 0);
+
         switch(this.type) {
             case RecordType.Book:
-                this.subRecord = new RecordBook(this, clone);
+                this.parsedSubRecord = new RecordBook(this, clone);
                 break;
             case RecordType.Faction:
-                this.subRecord = new RecordFaction(this, clone);
+                this.parsedSubRecord = new RecordFaction(this, clone);
                 break;
             case RecordType.AlchemicalApparatus:
             case RecordType.Armor:
@@ -70,32 +72,42 @@ export default class Record {
             case RecordType.Potion:
             case RecordType.Weapon:
             case RecordType.Key:
-                this.subRecord = new RecordGeneric(this, clone);
+                this.parsedSubRecord = new RecordGeneric(this, clone);
                 break;
             case RecordType.NPC:
             case RecordType.Creature:
-                this.subRecord = new RecordCreature(this, clone);
+                this.parsedSubRecord = new RecordCreature(this, clone);
                 break;
             case RecordType.Cell:
-                this.subRecord = new RecordCell(this, clone);
+                this.parsedSubRecord = new RecordCell(this, clone);
                 break;
             case RecordType.InstanceReference:
-                this.subRecord = new RecordInstanceReference(this, clone);
+                this.parsedSubRecord = new RecordInstanceReference(this, clone);
                 break;
             case RecordType.CharacterReference:
             case RecordType.CreatureReference:
-                this.subRecord = new RecordCreatureReference(this, clone);
+                this.parsedSubRecord = new RecordCreatureReference(this, clone);
                 break;
             case RecordType.Dialog:
-                this.subRecord = new RecordDialog(this, clone);
+                this.parsedSubRecord = new RecordDialog(this, clone);
                 break;
             case RecordType.Quest:
-                this.subRecord = new RecordQuest(this, clone);
+                this.parsedSubRecord = new RecordQuest(this, clone);
                 break;
             case RecordType.AI:
-                this.subRecord = new RecordAI(this, clone);
+                this.parsedSubRecord = new RecordAI(this, clone);
                 break;
         }
-        if (this.subRecord) delete this.data;
+        if (this.parsedSubRecord) delete this.data;
+        return this.parsedSubRecord;
+    }
+
+    constructor(buf: SaveBuffer) {
+        this.formId = buf.readInt();
+        this.type = buf.readByte();
+        this.flags = buf.readInt();
+        this.version = buf.readByte();
+        this.dataSize = buf.readShort();
+        this.data = buf.readByteArray(this.dataSize);
     }
 }
