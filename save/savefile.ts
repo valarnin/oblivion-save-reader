@@ -1,3 +1,4 @@
+import { quests, locs, ignoreLocs, skills, gates, horses, investments, books, houses, artifacts, nirnroots, arena, factions, greaterPowers, wayshrines, incompleteQuests } from "./constants";
 import CreatedData from "./createddata";
 import DeathCount from "./deathcount";
 import Global from "./global";
@@ -97,6 +98,26 @@ export class SaveFile {
     // World Spaces
     worldSpacesNum: number;
     worldSpaces: number[];
+
+    // Constants used for reading
+    static constants = {
+        quests: quests,
+        locs: locs,
+        ignoreLocs: ignoreLocs,
+        skills: skills,
+        gates: gates,
+        horses: horses,
+        investments: investments,
+        books: books,
+        houses: houses,
+        artifacts: artifacts,
+        nirnroots: nirnroots,
+        arena: arena,
+        factions: factions,
+        greaterPowers: greaterPowers,
+        wayshrines: wayshrines,
+        incompleteQuests: incompleteQuests,
+    };
 
     constructor(arrayBuf: ArrayBuffer) {
         const buf = new SaveBuffer(arrayBuf, 0);
@@ -207,5 +228,41 @@ export class SaveFile {
         // World Spaces
         this.worldSpacesNum = buf.readInt();
         this.worldSpaces = buf.readIntArray(this.worldSpacesNum);
+    }
+
+    trim(screenshotData: boolean = false) {
+        for (const loc of SaveFile.constants.locs) {
+            this.records.find((e) => e.formId === loc.formId)?.subRecord;
+        }
+        for (const investment of SaveFile.constants.investments) {
+            this.records.find((e) => e.formId === investment.formId)?.subRecord;
+        }
+        for (const book of SaveFile.constants.books) {
+            this.records.find((e) => e.formId === book.formId)?.subRecord;
+        }
+        for (const horse of SaveFile.constants.horses) {
+            this.records.find((e) => e.formId === horse.formId)?.subRecord;
+        }
+        for (const house of SaveFile.constants.houses) {
+            this.records.find((e) => e.formId === house.formId)?.subRecord;
+        }
+        for (const root of SaveFile.constants.nirnroots) {
+            this.records.find((e) => e.formId === root.formId)?.subRecord;
+        }
+        for (const quest of SaveFile.constants.quests) {
+            this.records.find((e) => e.formId === quest.formId)?.subRecord;
+        }
+        for (const gate of SaveFile.constants.gates) {
+            this.records.find((e) => e.formId === gate.formId)?.subRecord;
+        }
+        for (const fight of SaveFile.constants.arena) {
+            this.records.find((e) => e.formId === fight.formId)?.subRecord;
+        }
+        this.records.filter(r=>[0x14,0x7].includes(r.formId)).forEach(r=>r.subRecord);
+
+        if (screenshotData) {
+            this.screenshotData = [];
+        }
+        
     }
 }
