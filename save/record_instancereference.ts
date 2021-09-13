@@ -149,8 +149,10 @@ export class RecordInstanceReference {
                     });
                 }
             }
-            if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
-            [this.propertiesNum, this.properties] = getProps(buf, startOffset + record.dataSize);
+            if (record.flags & 0x173004e0) {
+                if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
+                [this.propertiesNum, this.properties] = getProps(buf, startOffset + record.dataSize);
+            }
             if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
             if (record.flags & 0x8) {
                 this.havokMoved_dataLen = buf.readShort();
