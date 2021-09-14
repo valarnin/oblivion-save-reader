@@ -6,5 +6,8 @@ export class RecordDialog {
 
     constructor(record: Record, buf: SaveBuffer) {
         this.topicSaidOnce = (record.flags & 0x10000000) === 0x10000000;
+        if (buf.buffer.byteLength !== buf.offset) {
+            debugger;
+        }
     }
 }

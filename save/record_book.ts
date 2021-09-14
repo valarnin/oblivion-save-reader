@@ -15,5 +15,8 @@ export class RecordBook {
         if (record.flags & 0x4) {
             this.teaches = buf.readByte();
         }
+        if (buf.buffer.byteLength !== buf.offset) {
+            debugger;
+        }
     }
 }

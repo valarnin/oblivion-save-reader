@@ -11,5 +11,8 @@ export class RecordGeneric {
         if (record.flags & 0x8) {
             this.value = buf.readInt();
         }
+        if (buf.buffer.byteLength !== buf.offset) {
+            debugger;
+        }
     }
 }

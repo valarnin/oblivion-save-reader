@@ -39,11 +39,12 @@ export class RecordQuest {
                     let entryFlag = buf.readByte();
                     // Read from a clone of buf for the other two since it's the same data represented 3 ways
                     let tmp = buf.clone();
+                    let tmp2 = buf.clone();
 
                     let entryValFloat = buf.readFloat();
 
                     let entryValInt = tmp.readInt();
-                    let entryValByteArray = tmp.readByteArray(4);
+                    let entryValByteArray = tmp2.readByteArray(4);
 
                     entries.push({
                         entryNum: entryFlag,
@@ -64,11 +65,18 @@ export class RecordQuest {
             this.dataNum = buf.readShort();
             this.dataUnknown = buf.readByte();
             for (let i = 0; i < this.dataNum; ++i) {
-                this.data.push(buf.readByteArray(12));
+                let l = 12;
+                if (i + 1 === this.dataNum) {
+                    l = (startOffset + record.dataSize) - buf.offset;
+                }
+                this.data.push(buf.readByteArray(l));
                 if (buf.offset > (startOffset + record.dataSize)) {
                     break;
                 }
             }
+        }
+        if (buf.buffer.byteLength !== buf.offset) {
+            debugger;
         }
     }
 }

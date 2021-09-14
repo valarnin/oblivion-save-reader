@@ -44,34 +44,32 @@ export class RecordCell {
             let clone: SaveBuffer | undefined;
             for (let seenType = 4; seenType >= 0; --seenType) {
                 clone = buf.clone();
-                if (seenType > 0) {
+                if ((record.dataSize - clone.offset) >= 32 && seenType > 0) {
                     this.seenUnknown = clone.readByteArray(32);
                 }
-                if (seenType > 1) {
+                if ((record.dataSize - clone.offset) >= 2 && seenType > 1) {
                     this.dataNum = clone.readShort();
                 }
-                if (seenType > 2) {
+                if ((record.dataSize - clone.offset) >= 2 && seenType > 2) {
                     this.dataFlags = clone.readShort();
                 }
-                if (seenType > 3) {
+                if ((record.dataSize - clone.offset) >= (34*((this.dataNum??0)-1)) && seenType > 3) {
                     for (let i = 0; i < (this.dataNum ?? 0) - 1; ++i) {
                         this.data.push(clone.readByteArray(34));
                         if (clone.offset > startOffset + record.dataSize) break;
                     }
                 }
-                if (record.flags & 0x10) {
+                if (record.flags & 0x10 && (record.dataSize - clone.offset) >= 1 && (record.dataSize - clone.offset) >= 1 + clone.peekByte()) {
                     this.fullName = clone.readbString();
                 }
         
-                if (record.flags & 0x20) {
+                if (record.flags & 0x20 && (record.dataSize - clone.offset) >= 4) {
                     this.owner = clone.readInt();
                 }
         
-                if (record.flags & 0x1000000) {
+                if (record.flags & 0x1000000 && (record.dataSize - clone.offset) >= 2 && (record.dataSize - clone.offset) >= 2 + (clone.peekShort() * 2)) {
                     this.pathgridDataLen = clone.readShort();
-                    for (let i = 0; i < this.pathgridDataLen; ++i) {
-                        this.pathgridData.push(clone.readShort());
-                    }
+                    this.pathgridData = clone.readShortArray(this.pathgridDataLen);
                 }
                 // Now check to make sure we consumed all data, reset if not
                 if ((clone.offset - startOffset) !== record.dataSize) {
@@ -108,6 +106,9 @@ export class RecordCell {
                     this.pathgridData.push(buf.readShort());
                 }
             }
+        }
+        if (buf.buffer.byteLength !== buf.offset) {
+            debugger;
         }
     }
 }

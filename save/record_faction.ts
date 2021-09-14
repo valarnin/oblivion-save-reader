@@ -25,5 +25,8 @@ export class RecordFaction {
         if (record.flags & 0x4) {
             this.flags = buf.readByte();
         }
+        if (buf.buffer.byteLength !== buf.offset) {
+            debugger;
+        }
     }
 }

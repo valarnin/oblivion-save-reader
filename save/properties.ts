@@ -196,11 +196,7 @@ let getProps = (buf: SaveBuffer, endOffset: number): [
                 value.unknown = buf.readInt();
                 value.dataNum = buf.readShort();
                 value.data = buf.readByteArray(value.dataNum);
-                if (k + 1 === propertiesNum) {
-                    value.unknown2 = buf.readByteArray(2);
-                } else {
-                    value.unknown2 = [];
-                }
+                // uesp states that sometimes there's 2 extra null bytes here. That's actually a 0x0000 havok moved length apparently?
                 break;
             case 0x4e:
                 value = {};

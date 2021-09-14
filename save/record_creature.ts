@@ -165,5 +165,8 @@ export class RecordCreature {
         if (record.flags & 0x400) {
             this.combatStyle = buf.readInt();
         }
+        if (buf.buffer.byteLength !== buf.offset) {
+            debugger;
+        }
     }
 }
