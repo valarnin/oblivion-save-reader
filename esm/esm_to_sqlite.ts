@@ -43,12 +43,15 @@ if (!fs.existsSync(from)) {
     process.exit(1);
 }
 
+const bigIntReplacer = (k:string,v:any) => typeof v === 'bigint' ? v.toString() : v;
+
 const to: string = args.to ?? from.replace(/\.es[mp]$/i, '.db');
 void sqlite.open({
     filename: to,
     driver: sqlite3.Database,
 }).then(async (db) => {
-    const esm = new ESM(fs.readFileSync(from).buffer).init();
+    const file = fs.readFileSync(from);
+    const esm = new ESM(file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength)).init();
     await db.exec(`
 CREATE TABLE "Records" (
     "id"	INTEGER,
@@ -81,17 +84,17 @@ CREATE INDEX idx_formId ON Records(formId);
     const recursiveAdd = async (parent: number, record: Record | GRUP) => {
         const tmpCopy = {...record} as Partial<Record | GRUP>;
         delete tmpCopy.subRecords;
-        const id = await runStmt(record.type, parent, record.offset, record instanceof GRUP ? null : record.formId, JSON.stringify(tmpCopy));
+        const id = await runStmt(record.type, parent, record.offset, record instanceof GRUP ? null : record.formId, JSON.stringify(tmpCopy, bigIntReplacer));
         for (const v of record.subRecords) {
             if (v instanceof Subrecord) {
-                await runStmt(v.label, id, v.offset, null, JSON.stringify(v));
+                await runStmt(v.label, id, v.offset, null, JSON.stringify(v, bigIntReplacer));
             } else {
                 await recursiveAdd(id, v as GRUP_Subrecord);
             }
         }
     };
 
-    const res = await stmt.run(esm.header?.type, null, 0, esm.header?.formId, JSON.stringify(esm.header));
+    const res = await stmt.run(esm.header?.type, null, 0, esm.header?.formId, JSON.stringify(esm.header, bigIntReplacer));
     const tes4Id = res.lastID ?? 0;
     for (const r of esm.groups) {
         await recursiveAdd(tes4Id, r);
