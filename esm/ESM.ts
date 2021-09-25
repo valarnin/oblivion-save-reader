@@ -14,6 +14,7 @@ export default class ESM {
             return this;
         }
         this.header = new TES4(this.buf);
+        this.buf.trim(true);
         let i = 0;
         while (this.buf.buffer.byteLength > 4) {
             try {
