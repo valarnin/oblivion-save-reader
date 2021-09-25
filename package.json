@@ -7,12 +7,19 @@
     "build-js": "tsc",
     "build-dev": "webpack --mode development",
     "build-prod": "webpack --mode production",
-    "server": "tsc && node --loader ts-node/esm --experimental-specifier-resolution=node server/server.ts"
+    "server": "tsc && node --loader ts-node/esm --experimental-specifier-resolution=node server/server.ts",
+    "esm_to_json": "tsc && cross-env NODE_OPTIONS=--max-old-space-size=20480 node --expose-gc --loader ts-node/esm --experimental-specifier-resolution=node esm/esm_to_json.ts",
+    "esm_to_sqlite": "tsc && cross-env NODE_OPTIONS=--max-old-space-size=20480 node --expose-gc --loader ts-node/esm --experimental-specifier-resolution=node esm/esm_to_sqlite.ts"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/argparse": "^2.0.10",
+    "@types/pako": "^1.0.2",
+    "@types/sqlite3": "^3.1.7",
     "@types/websocket": "^1.0.4",
+    "argparse": "^2.0.1",
+    "cross-env": "^7.0.3",
     "ts-loader": "^9.2.5",
     "tslint": "^6.1.3",
     "typescript": "^4.4.2",
@@ -23,6 +30,10 @@
     "@types/glob": "^7.1.4",
     "chokidar": "^3.5.2",
     "glob": "^7.1.7",
+    "json-stream-stringify": "^2.0.4",
+    "pako": "^2.0.4",
+    "sqlite": "^4.0.23",
+    "sqlite3": "^5.0.2",
     "ts-node": "^10.2.1",
     "ttypescript": "^1.5.12",
     "websocket": "^1.0.34"

@@ -15,6 +15,11 @@ export default {
       library: {type: 'umd', name: 'oblivionRecord'},
       filename: 'bundle.record.js',
     },
+    b: {
+      import: './esm/ESM.ts',
+      library: {type: 'umd', name: 'oblivionESM'},
+      filename: 'bundle.esm.js',
+    },
   },
   output: {
     path: dist,
