@@ -5,6 +5,6 @@ export class SCTX extends Subrecord {
     public readonly resultScriptSource: string;
     constructor(buf: ESMBuffer) {
         super('SCTX', buf, true);
-        this.resultScriptSource = buf.readszString();
+        this.resultScriptSource = buf.readsString();
     }
 }
