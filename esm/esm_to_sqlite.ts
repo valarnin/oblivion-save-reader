@@ -10,6 +10,8 @@ import { GRUP_Subrecord } from './records/GRUP/GRUPFactory';
 import GRUP from './records/GRUP';
 import { Record } from './records/GRUP/Record';
 import { Subrecord } from './records/GRUP/common/Subrecord';
+import { REFR } from './records/GRUP/REFR';
+import { NAME } from './records/GRUP/common/NAME';
 
 const argumentParser = new ArgumentParser({
     description: 'A collection of common util functions for developing cactbot.',
@@ -24,6 +26,12 @@ argumentParser.add_argument('-f', '--from', {
 argumentParser.add_argument('-t', '--to', {
     type: 'string',
     help: 'The SQLite DB to write to',
+    required: false,
+});
+
+argumentParser.add_argument('-e', '--exclude', {
+    type: 'string',
+    help: 'Comma-separated list of record types to exclude. Also excludes REFR records with those types as parents',
     required: false,
 });
 
@@ -43,6 +51,20 @@ if (!fs.existsSync(from)) {
     process.exit(1);
 }
 
+const excludes: string[] = args.exclude?.split(',') ?? [];
+const excludesMap: number[] = [];
+
+const buildExcludesMap = (record: Record | GRUP) => {
+    if (record instanceof Record && excludes.includes(record.type)) {
+        excludesMap.push(record.formId);
+    }
+    for (const v of record.subRecords) {
+        if (!(v instanceof Subrecord)) {
+            buildExcludesMap(v);
+        }
+    }
+};
+
 const bigIntReplacer = (k:string,v:any) => typeof v === 'bigint' ? v.toString() : v;
 
 const to: string = args.to ?? from.replace(/\.es[mp]$/i, '.db');
@@ -52,6 +74,13 @@ void sqlite.open({
 }).then(async (db) => {
     const file = fs.readFileSync(from);
     const esm = new ESM(file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength)).init();
+
+    if (excludes && excludes.length) {
+        for (const group of esm.groups) {
+            buildExcludesMap(group);
+        }
+    }
+
     await db.exec(`
 CREATE TABLE "Records" (
     "id"	INTEGER,
@@ -82,6 +111,17 @@ CREATE INDEX idx_formId ON Records(formId);
         return res.lastID as number;
     };
     const recursiveAdd = async (parent: number, record: Record | GRUP) => {
+        if (record instanceof Record && excludes.includes(record.type)) {
+            return;
+        }
+        if (record instanceof REFR) {
+            const name = record.subRecords.find(sr=>sr.label === 'NAME');
+            if (name instanceof NAME) {
+                if (excludesMap.includes(name.formId)) {
+                    return;
+                }
+            }
+        }
         const tmpCopy = {...record} as Partial<Record | GRUP>;
         delete tmpCopy.subRecords;
         const id = await runStmt(record.type, parent, record.offset, record instanceof GRUP ? null : record.formId, JSON.stringify(tmpCopy, bigIntReplacer));
