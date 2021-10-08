@@ -9,7 +9,8 @@
     "build-prod": "webpack --mode production",
     "server": "tsc && node --loader ts-node/esm --experimental-specifier-resolution=node server/server.ts",
     "esm_to_json": "tsc && cross-env NODE_OPTIONS=--max-old-space-size=20480 node --expose-gc --loader ts-node/esm --experimental-specifier-resolution=node esm/esm_to_json.ts",
-    "esm_to_sqlite": "tsc && cross-env NODE_OPTIONS=--max-old-space-size=20480 node --expose-gc --loader ts-node/esm --experimental-specifier-resolution=node esm/esm_to_sqlite.ts"
+    "esm_to_sqlite": "tsc && cross-env NODE_OPTIONS=--max-old-space-size=20480 node --expose-gc --loader ts-node/esm --experimental-specifier-resolution=node esm/esm_to_sqlite.ts",
+    "pkg": "tsc && pkg --compress GZip --out-path dist/bin dist/server/server.js && pkg --compress GZip --out-path dist/bin --options \"expose-gc,loader=ts-node/esm,experimental-specifier-resolution=node\" dist/esm/esm_to_sqlite.js"
   },
   "author": "",
   "license": "MIT",
@@ -32,6 +33,7 @@
     "glob": "^7.1.7",
     "json-stream-stringify": "^2.0.4",
     "pako": "^2.0.4",
+    "pkg": "^5.3.3",
     "sqlite": "^4.0.23",
     "sqlite3": "^5.0.2",
     "ts-node": "^10.2.1",
