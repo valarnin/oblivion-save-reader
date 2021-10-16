@@ -67,6 +67,26 @@ const buildExcludesMap = (record: Record | GRUP) => {
 
 const bigIntReplacer = (k:string,v:any) => typeof v === 'bigint' ? v.toString() : v;
 
+const extractExtraKey = (record: Record | GRUP | Subrecord) => {
+    if (record instanceof GRUP)
+        return null;
+
+    const commonKeys = ['id', 'formId', 'formid'];
+
+    for (const key of commonKeys) {
+        if (key in record && (typeof record[key as keyof (Record | Subrecord)]) === 'number') {
+            return record[key as keyof (Record | Subrecord)] as number;
+        }
+    }
+
+    for (const key in record) {
+        if (key.toLowerCase().includes('id') && (typeof record[key as keyof (Record | Subrecord)]) === 'number') {
+            return record[key as keyof (Record | Subrecord)] as number;
+        }
+    }
+    return null;
+};
+
 const to: string = args.to ?? from.replace(/\.es[mp]$/i, '.db');
 void sqlite.open({
     filename: to,
@@ -88,19 +108,22 @@ CREATE TABLE "Records" (
     "offset"	INT,
     "formId"	INT,
     "parent"	INT,
+    "extraId"	INT,
     "content"	TEXT,
     FOREIGN KEY("parent") REFERENCES "Records"("id"),
     PRIMARY KEY("id" AUTOINCREMENT)
 );
 CREATE INDEX idx_type ON Records(type);
 CREATE INDEX idx_formId ON Records(formId);
+CREATE INDEX idx_parent ON Records(parent);
+CREATE INDEX idx_extraId ON Records(extraId);
 `).catch(e=>console.log(e));
 
-    const stmt = await db.prepare('INSERT INTO Records (type, parent, offset, formId, content) VALUES (?, ?, ?, ?, ?)');
+    const stmt = await db.prepare('INSERT INTO Records (type, parent, offset, formId, extraId, content) VALUES (?, ?, ?, ?, ?, ?)');
     await db.run('BEGIN');
     let i = 0;
-    const runStmt = async (type: string, parent: number, offset: number, formId: number|null, content: string) => {
-        const res = await stmt.run(type,parent,offset,formId,content);
+    const runStmt = async (type: string, parent: number, offset: number, formId: number|null, extraId: number|null, content: string) => {
+        const res = await stmt.run(type,parent,offset,formId,extraId,content);
         ++i;
         if (i >= 100000) {
             console.log(`Committing ${i} statements in transaction`);
@@ -124,10 +147,10 @@ CREATE INDEX idx_formId ON Records(formId);
         }
         const tmpCopy = {...record} as Partial<Record | GRUP>;
         delete tmpCopy.subRecords;
-        const id = await runStmt(record.type, parent, record.offset, record instanceof GRUP ? null : record.formId, JSON.stringify(tmpCopy, bigIntReplacer));
+        const id = await runStmt(record.type, parent, record.offset, record instanceof GRUP ? null : record.formId, extractExtraKey(record), JSON.stringify(tmpCopy, bigIntReplacer));
         for (const v of record.subRecords) {
             if (v instanceof Subrecord) {
-                await runStmt(v.label, id, v.offset, null, JSON.stringify(v, bigIntReplacer));
+                await runStmt(v.label, id, v.offset, null, extractExtraKey(v), JSON.stringify(v, bigIntReplacer));
             } else {
                 await recursiveAdd(id, v as GRUP_Subrecord);
             }
