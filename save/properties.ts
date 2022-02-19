@@ -1,23 +1,36 @@
 import { SaveBuffer } from "./util";
 
-let getProps = (buf: SaveBuffer, endOffset: number): [
-    number,
-    {
-        flag: number;
-        // @TODO: More strict typing here?
-        value: any;
-    }[],
-] => {
+export class Property{
+    flag: number;
+    value: any;
+
+    constructor(flag: number, value: any){
+        this.flag = flag;
+        this.value = value;
+    }
+}
+
+export class PropertyCollection{
+    propertiesNum: number;
+    properties: Property[];
+
+    constructor(propertiesNum: number, properties: Property[]){
+        this.propertiesNum = propertiesNum;
+        this.properties = properties;
+    }
+}
+
+let getProps = (buf: SaveBuffer, endOffset: number): PropertyCollection => {
     let propertiesNum = buf.readShort();
     let properties: {
         flag: number;
         // @TODO: More strict typing here?
         value: any;
     }[] = [];
-    if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return [propertiesNum, properties];}
+    if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return {propertiesNum, properties};}
     for (let k = 0; k < propertiesNum; ++k) {
         let flag = buf.readByte();
-        if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return [propertiesNum, properties];}
+        if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return {propertiesNum, properties};}
         let value: any = undefined;
         // This is ugly
         switch(flag) {
@@ -40,7 +53,7 @@ let getProps = (buf: SaveBuffer, endOffset: number): [
                         _var.refVar = buf.readDouble();
                     }
                     value.variables.push(_var);
-                    if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return [propertiesNum, properties];}
+                    if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return {propertiesNum, properties};}
                 }
                 value.unknown = buf.readByte();
                 break;
@@ -79,7 +92,7 @@ let getProps = (buf: SaveBuffer, endOffset: number): [
                     data.iref = buf.readInt();
                     data.unknown = buf.readByte();
                     value.data.push(data);
-                    if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return [propertiesNum, properties];}
+                    if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return {propertiesNum, properties};}
                 }
                 break;
             case 0x22:
@@ -91,7 +104,7 @@ let getProps = (buf: SaveBuffer, endOffset: number): [
                 value.data = [];
                 for (let l = 0; l < value.dataNum; ++l) {
                     value.data.push(buf.readInt());
-                    if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return [propertiesNum, properties];}
+                    if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return {propertiesNum, properties};}
                 }
                 break;
             case 0x25:
@@ -163,7 +176,7 @@ let getProps = (buf: SaveBuffer, endOffset: number): [
                 value.data = [];
                 for (let i = 0; i < value.dataNum; ++i) {
                     value.data.push(buf.readByteArray(61));
-                    if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return [propertiesNum, properties];}
+                    if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return {propertiesNum, properties};}
                 }
                 break;
             case 0x3c:
@@ -204,7 +217,7 @@ let getProps = (buf: SaveBuffer, endOffset: number): [
                 value.data = [];
                 for (let i = 0; i < value.dataNum; ++i) {
                     value.data.push(buf.readByteArray(10));
-                    if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return [propertiesNum, properties];}
+                    if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return {propertiesNum, properties};}
                 }
                 break;
             case 0x4f:
@@ -235,7 +248,7 @@ let getProps = (buf: SaveBuffer, endOffset: number): [
                     conv.convDialog = buf.readInt();
                     conv.convInfo = buf.readInt();
                     value.conv.push(conv);
-                    if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return [propertiesNum, properties];}
+                    if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return {propertiesNum, properties};}
                 }
                 break;
             case 0x5a:
@@ -249,13 +262,13 @@ let getProps = (buf: SaveBuffer, endOffset: number): [
             flag: flag,
             value: value,
         });
-        if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return [propertiesNum, properties];}
+        if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return {propertiesNum, properties};}
     }
 
-    return [
+    return {
         propertiesNum,
         properties,
-    ];
+    };
 };
 
 export default getProps;

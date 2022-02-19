@@ -1,5 +1,6 @@
-import getProps from "./properties";
+import getProps, { PropertyCollection } from "./properties";
 import Record from "./record";
+import { InventoryItem } from "./record_instancereference";
 import { SaveBuffer } from "./util";
 
 class PlayerObject {
@@ -424,19 +425,7 @@ export class RecordCreatureReference {
 
     flags?: number;
     inventory_itemNum?: number;
-    inventory_items: {
-        iref: number,
-        stackedItemsNum: number,
-        changedEntriesNum: number,
-        changedEntries: {
-            propertiesNum: number;
-            properties: {
-                flag: number;
-                // @TODO: More strict typing here?
-                value: any;
-            }[];
-        }[];
-    }[] = [];
+    inventory_items: InventoryItem[] = [];
     havokMoved_dataLen?: number;
     havokMoved_data: number[] = [];
     scale?: number;
@@ -540,20 +529,10 @@ export class RecordCreatureReference {
                     let iref = buf.readInt(maxOffset);
                     let stackedItemsNum = buf.readInt(maxOffset);
                     let changedEntriesNum = buf.readInt(maxOffset);
-                    let changedEntries: {
-                        propertiesNum: number;
-                        properties: {
-                            flag: number;
-                            // @TODO: More strict typing here?
-                            value: any;
-                        }[];
-                    }[] = [];
+                    let changedEntries: PropertyCollection[] = [];
                     for (let j = 0; j < changedEntriesNum; ++j) {
                         let props = getProps(buf, startOffset + record.dataSize);
-                        changedEntries.push({
-                            propertiesNum: props[0],
-                            properties: props[1],
-                        });
+                        changedEntries.push(props);
                     }
                     this.inventory_items.push({
                         iref: iref,
@@ -563,7 +542,9 @@ export class RecordCreatureReference {
                     });
                 }
             }
-            [this.propertiesNum, this.properties] = getProps(buf, startOffset + record.dataSize);
+            let p = getProps(buf, startOffset + record.dataSize);
+            this.propertiesNum = p.propertiesNum;
+            this.properties = p.properties;
             if (record.flags & 0x8 && !(record.flags & 0x2 || record.flags & 0x4)) {
                 this.havokMoved_dataLen = buf.readShort(maxOffset);
                 this.havokMoved_data = buf.readByteArray(this.havokMoved_dataLen);

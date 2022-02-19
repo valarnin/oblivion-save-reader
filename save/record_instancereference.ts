@@ -1,6 +1,21 @@
-import getProps from "./properties";
+import { textSpanIsEmpty } from "typescript";
+import getProps, { Property, PropertyCollection } from "./properties";
 import Record from "./record";
 import { SaveBuffer } from "./util";
+
+export class InventoryItem{
+    iref: number;
+    stackedItemsNum: number;
+    changedEntriesNum: number;
+    changedEntries: PropertyCollection[];
+
+    constructor(iref: number, stackedItemsNum: number, changedEntriesNum: number, changedEntries: PropertyCollection[]){
+        this.iref = iref;
+        this.stackedItemsNum = stackedItemsNum;
+        this.changedEntriesNum = changedEntriesNum;
+        this.changedEntries = changedEntries;
+    }
+}
 
 export class RecordInstanceReference {
     cellChanged_cell?: number;
@@ -40,29 +55,13 @@ export class RecordInstanceReference {
 
     flags?: number;
     inventory_itemNum?: number;
-    inventory_items: {
-        iref: number,
-        stackedItemsNum: number,
-        changedEntriesNum: number,
-        changedEntries: {
-            propertiesNum: number;
-            properties: {
-                flag: number;
-                // @TODO: More strict typing here?
-                value: any;
-            }[];
-        }[];
-    }[] = [];
+    inventory_items: InventoryItem[] = [];
     havokMoved_dataLen?: number;
     havokMoved_data: number[] = [];
     scale?: number;
     enabled?: boolean;
     propertiesNum?: number;
-    properties: {
-        flag: number;
-        // @TODO: More strict typing here?
-        value: any;
-    }[] = [];
+    properties: Property[] = [];
 
     constructor(record: Record, buf: SaveBuffer) {
         const startOffset = buf.offset;
@@ -121,21 +120,11 @@ export class RecordInstanceReference {
                     let iref = buf.readInt(maxOffset);
                     let stackedItemsNum = buf.readInt(maxOffset);
                     let changedEntriesNum = buf.readInt(maxOffset);
-                    let changedEntries: {
-                        propertiesNum: number;
-                        properties: {
-                            flag: number;
-                            // @TODO: More strict typing here?
-                            value: any;
-                        }[];
-                    }[] = [];
+                    let changedEntries: PropertyCollection[] = [];
                     for (let j = 0; j < changedEntriesNum; ++j) {
                         if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
                         let props = getProps(buf, startOffset + record.dataSize);
-                        changedEntries.push({
-                            propertiesNum: props[0],
-                            properties: props[1],
-                        });
+                        changedEntries.push(props);
                     }
                     this.inventory_items.push({
                         iref: iref,
@@ -147,7 +136,9 @@ export class RecordInstanceReference {
             }
             if (record.flags & 0x173004e0) {
                 if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
-                [this.propertiesNum, this.properties] = getProps(buf, startOffset + record.dataSize);
+                let props = getProps(buf, startOffset + record.dataSize);
+                this.propertiesNum = props.propertiesNum;
+                this.properties = props.properties;
             }
             if (record.flags & 0x8 && !(record.flags & 0x2 || record.flags & 0x4)) {
                 this.havokMoved_dataLen = buf.readShort(maxOffset);
