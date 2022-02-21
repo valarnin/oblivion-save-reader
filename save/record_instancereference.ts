@@ -1,21 +1,7 @@
-import { textSpanIsEmpty } from "typescript";
+import { InventoryItem } from "./inventoryitem";
 import getProps, { Property, PropertyCollection } from "./properties";
 import Record from "./record";
 import { SaveBuffer } from "./util";
-
-export class InventoryItem{
-    iref: number;
-    stackedItemsNum: number;
-    changedEntriesNum: number;
-    changedEntries: PropertyCollection[];
-
-    constructor(iref: number, stackedItemsNum: number, changedEntriesNum: number, changedEntries: PropertyCollection[]){
-        this.iref = iref;
-        this.stackedItemsNum = stackedItemsNum;
-        this.changedEntriesNum = changedEntriesNum;
-        this.changedEntries = changedEntries;
-    }
-}
 
 export class RecordInstanceReference {
     cellChanged_cell?: number;
@@ -123,8 +109,7 @@ export class RecordInstanceReference {
                     let changedEntries: PropertyCollection[] = [];
                     for (let j = 0; j < changedEntriesNum; ++j) {
                         if (buf.offset - startOffset > record.dataSize) {/* console.log('Invalid object', record, this); */ return;}
-                        let props = getProps(buf, startOffset + record.dataSize);
-                        changedEntries.push(props);
+                        changedEntries.push(getProps(buf, startOffset + record.dataSize));
                     }
                     this.inventory_items.push({
                         iref: iref,

@@ -2,6 +2,7 @@ import { SaveBuffer } from "./util";
 
 export class Property{
     flag: number;
+    // @TODO: More strict typing here?
     value: any;
 
     constructor(flag: number, value: any){
@@ -22,11 +23,7 @@ export class PropertyCollection{
 
 let getProps = (buf: SaveBuffer, endOffset: number): PropertyCollection => {
     let propertiesNum = buf.readShort();
-    let properties: {
-        flag: number;
-        // @TODO: More strict typing here?
-        value: any;
-    }[] = [];
+    let properties: Property[] = [];
     if (buf.offset > endOffset) {/* console.log('Invalid object props', propertiesNum, offset, endOffset); */ return {propertiesNum, properties};}
     for (let k = 0; k < propertiesNum; ++k) {
         let flag = buf.readByte();

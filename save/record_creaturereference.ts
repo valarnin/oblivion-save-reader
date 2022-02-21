@@ -531,8 +531,7 @@ export class RecordCreatureReference {
                     let changedEntriesNum = buf.readInt(maxOffset);
                     let changedEntries: PropertyCollection[] = [];
                     for (let j = 0; j < changedEntriesNum; ++j) {
-                        let props = getProps(buf, startOffset + record.dataSize);
-                        changedEntries.push(props);
+                        changedEntries.push(getProps(buf, startOffset + record.dataSize));
                     }
                     this.inventory_items.push({
                         iref: iref,
