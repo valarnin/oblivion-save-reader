@@ -1,6 +1,6 @@
 import getProps, { PropertyCollection } from "./properties";
 import Record from "./record";
-import { InventoryItem } from "./record_instancereference";
+import { InventoryItem } from "./inventoryitem";
 import { SaveBuffer } from "./util";
 
 class PlayerObject {
