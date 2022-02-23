@@ -190,8 +190,10 @@ const rebuildGatesTable = (saveFile = undefined) => {
             let record = saveFile.records.find((e) => e.formId === gate.formId);
             if (record) {
                 if (record.flags & 0x7000005 === 0x7000005) {
-                    status = '✔';
-                    ++completed;
+                    if (record.subRecord && record.subRecord.flags !== undefined && (record.subRecord.flags & 0x2000) === 0x2000) {
+                        status = '✔';
+                        ++completed;
+                    }
                 }
             }
         }
@@ -625,8 +627,10 @@ const rebuildFameTable = (saveFile = undefined) => {
             let record = saveFile.records.find((e) => e.formId === gate.formId);
             if (record) {
                 if (record.flags & 0x7000005 === 0x7000005) {
-                    gatesCurrent += gate.fame;
-                    totalCurrent += gate.fame;
+                    if (record.subRecord && record.subRecord.flags !== undefined && (record.subRecord.flags & 0x2000) === 0x2000) {
+                        gatesCurrent += gate.fame;
+                        totalCurrent += gate.fame;
+                    }
                 }
             }
         }

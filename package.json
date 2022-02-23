@@ -1,6 +1,6 @@
 {
   "name": "oblivion-save-reader",
-  "version": "0.5.0",
+  "version": "1.2",
   "description": "Library to read ES4:Oblivion save files",
   "main": "test.js",
   "scripts": {
@@ -10,9 +10,10 @@
     "server": "tsc && node --loader ts-node/esm --experimental-specifier-resolution=node server/server.ts",
     "esm_to_json": "tsc && cross-env NODE_OPTIONS=--max-old-space-size=20480 node --expose-gc --loader ts-node/esm --experimental-specifier-resolution=node esm/esm_to_json.ts",
     "esm_to_sqlite": "tsc && cross-env NODE_OPTIONS=--max-old-space-size=20480 node --expose-gc --loader ts-node/esm --experimental-specifier-resolution=node esm/esm_to_sqlite.ts",
-    "pkg": "tsc && pkg --compress GZip --out-path dist/bin dist/server/server.js && pkg --compress GZip --out-path dist/bin --options \"expose-gc,loader=ts-node/esm,experimental-specifier-resolution=node\" dist/esm/esm_to_sqlite.js"
+    "pkg": "tsc && pkg --compress GZip --out-path dist/bin dist/server/server.js && pkg --compress GZip --out-path dist/bin --options \"expose-gc,loader=ts-node/esm,experimental-specifier-resolution=node\" dist/esm/esm_to_sqlite.js",
+    "pkg_test": "tsc && webpack --mode production && zip -r dist/bin/oblivion-save-reader-v${npm_package_version}.zip test.html test.js dist/bundle.savefile.* dist/bundle.record.* dist/save"
   },
-  "author": "",
+  "author": "valarnin",
   "license": "MIT",
   "devDependencies": {
     "@types/argparse": "^2.0.10",
