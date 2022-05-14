@@ -12,28 +12,53 @@ const rebuildQuestsTable = (saveFile = undefined) => {
 
     for (const quest of window.oblivionSaveFile.SaveFile.constants.quests) {
         let status = '✖';
+        let haveStages = [];
+        let completedStatus = false;
         if (saveFile) {
-            
             let record = saveFile.records.find((e) => e.formId === quest.formId);
             if (record) {
+                record.subRecord.stage.filter((stage) => stage.flag & 0x1).forEach((stage) => {
+                    haveStages.push({index: stage.index, completion: quest.stages.includes(stage.index)});
+                });
                 for (const stage of record.subRecord.stage) {
                     if (quest.stages.includes(stage.index) && stage.flag&0x1) {
                         status = '✔';
                         ++completed;
                         fame += quest.fame;
+                        completedStatus = true;
                         break;
                     }
                 }
             }
         }
+        for (const stage of quest.stages) {
+            if (haveStages.find((s2) => s2.index === stage) === undefined)
+                haveStages.push({index: stage});
+        }
+
+        haveStages = haveStages.sort((l, r) => l.index - r.index);
+
+        let stagesStr = '';
+
+        for (const stage of haveStages) {
+            if (stage.completion)
+                stagesStr += `<strong style='color:green'>${stage.index}</strong><br>`;
+            else if (stage.completion === undefined)
+                stagesStr += `<strong style='color:${completedStatus ? 'yellow' : 'red'}'>${stage.index}</strong><br>`;
+            else
+                stagesStr += `${stage.index}<br>`;
+        }
 
         let qTr = document.createElement('tr');
+        if (completedStatus === true && haveStages.length <= 1)
+            qTr.style.backgroundColor = 'lightyellow';
+
         qTr.innerHTML = `
 <td class='status ${status}'>${status}</td>
 <td class='id'>${quest.id}</td>
 <td class='formId'>${('0000000'+quest.formId.toString(16)).substr(-8)}</td>
 <td class='name'>${quest.name}</td>
-<td class='stages'>${quest.stages.join('<br>')}</td>
+<td class='stages'>${stagesStr}</td>
 <td class='fame'>${quest.fame}</td>
 <td class='url'><a href="${quest.url}">UESP</a></td>
 `;
