@@ -139,6 +139,9 @@ const rebuildLocsTable = (saveFile = undefined) => {
                 if (prop && prop.value===3) {
                     status = '✔';
                     ++completed;
+                    // Mark gates that have spawned but not been discovered with double question mark
+                } else if (record.subRecord.enabled === true && loc.name.includes('Oblivion Gate')) {
+                    status = '⁇';
                 }
             }
         }
@@ -763,6 +766,42 @@ const rebuildStatistics = (saveFile) => {
     }
 };
 
+const rebuildTwoSidesTable = (saveFile = undefined) => {
+    let qTable = document.getElementById('twosides-table');
+    let qBody = qTable.querySelector('tbody');
+
+    [...qBody.querySelectorAll('tr')].forEach((e) => {
+        e.remove();
+    });
+
+    let chestFormIds = [];
+    if (saveFile) {
+        let record = saveFile.records.find((e) => e.formId === 0x53786);
+        if (record) {
+            chestFormIds = record.subRecord?.inventory_items.map(i=>saveFile.formIds[i.iref]);
+        }
+    }
+
+    for (const formId of chestFormIds) {
+        const book = window.oblivionSaveFile.SaveFile.constants.books.find(b=>b.formId===formId);
+        let status = '✖';
+        if (book === undefined) {
+            continue;
+        }
+        if (book.random === true) {
+            status = '✔';
+        }
+
+        let qTr = document.createElement('tr');
+        qTr.innerHTML = `
+<td class='status ${status}'>${status}</td>
+<td class='formId'>${formId?('0000000'+formId.toString(16)).substr(-8):'???'}</td>
+<td class='name'>${book.name}</td>
+`;
+        qBody.append(qTr);
+    }
+};
+
 const readSaveFile = (ts, saveFile) => {
     // Reapply prototype since it may be lost over ws
     saveFile.records.forEach(r=>{
@@ -841,6 +880,10 @@ const readSaveFile = (ts, saveFile) => {
     rebuildStatistics(saveFile);
     ts2 = Date.now();
     console.log(`rebuildStatistics done, elapsed ${ts2 - ts}`);
+    ts = ts2;
+    rebuildTwoSidesTable(saveFile);
+    ts2 = Date.now();
+    console.log(`rebuildTwoSidesTable done, elapsed ${ts2 - ts}`);
     ts = ts2;
 };
 

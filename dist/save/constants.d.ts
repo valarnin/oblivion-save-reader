@@ -59,11 +59,17 @@ export declare const investments: {
     store: string;
     name: string;
 }[];
-export declare const books: {
+export declare const books: ({
     formId: number;
     name: string;
     skill: string;
-}[];
+    random?: undefined;
+} | {
+    formId: number;
+    name: string;
+    skill: string;
+    random: boolean;
+})[];
 export declare const houses: {
     formId: number;
     city: string;

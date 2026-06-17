@@ -127,11 +127,17 @@ export declare class SaveFile {
             store: string;
             name: string;
         }[];
-        books: {
+        books: ({
             formId: number;
             name: string;
             skill: string;
-        }[];
+            random?: undefined;
+        } | {
+            formId: number;
+            name: string;
+            skill: string;
+            random: boolean;
+        })[];
         houses: {
             formId: number;
             city: string;
